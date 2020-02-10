@@ -1,41 +1,33 @@
 package parkinglot;
 
-import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class ParkingLot {
 
     TreeMap<Integer, CarInfo> data = new TreeMap<Integer, CarInfo>();
-    TreeMap<Integer, Boolean> isEmpty = new TreeMap<Integer, Boolean>();
+    TreeMap<Integer, Boolean> isLotEmpty = new TreeMap<Integer, Boolean>();
     Integer token = 0;
+    int count=0;
 
-    public boolean park() {
-        return true;
+    public int park() {
+        count++;
+        return count;
     }
 
-    public TreeMap<Integer, Boolean> addedInfo(CarInfo info) {
-        boolean park = park();
-        if (park == true) {
+    public TreeMap<Integer, Boolean> addedInfo(CarInfo info) throws ParkingLotException {
+        int park = park();
+        if (park<=100) {
             token++;
-            CarInfo put = data.put(token, info);
-            isEmpty.put(token, true);
+            CarInfo put = data.put(token,info);
+            isLotEmpty.put(token, true);
+            return isLotEmpty;
         }
-        return isEmpty;
+        throw new ParkingLotException("Lot_Not_Available",ParkingLotException.ExceptionType.Lot_Not_Available);
     }
 
     public void unPark(int key) {
-       isEmpty.replace(key, false);
+       isLotEmpty.replace(key, false);
     }
-    }
 
+}
 
-//        Boolean replace = isEmpty.replace(integerBooleanHashMap,false);
-//        System.out.println(isEmpty);
-//        return replace;
-
-
-
-//    public void unPark(HashMap<Integer, Boolean> integerBooleanHashMap) {
-//        isEmpty.replace(integerBooleanHashMap.,false);
-//    }

@@ -1,23 +1,14 @@
 package parkinglot;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import java.util.HashMap;
-import java.util.Set;
+
 import java.util.TreeMap;
 
 public class ParkingLotTestCases {
 
     @Test
-    public void whenDriverWantToParkHisCar_ShouldAbleToPark() {
-        ParkingLot parkingLot= new ParkingLot();
-        boolean park = parkingLot.park();
-        Assert.assertEquals(true,park);
-    }
-
-    @Test
-    public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() {
+    public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
         ParkingLot parkingLot=new ParkingLot();
         CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
         CarInfo car2=new CarInfo("MH 01 CD 3367","Suv","red",2.15);
@@ -40,7 +31,7 @@ public class ParkingLotTestCases {
 
 
     @Test
-    public void whenParkCar_ItShouldFirstCheckSpaceIsEmpty_ThenSpaceTokenShouldReturnTrue() {
+    public void whenParkCar_ItShouldFirstCheckSpaceIsEmpty_ThenSpaceTokenShouldReturnTrue() throws ParkingLotException {
         ParkingLot parkingLot= new ParkingLot();
         CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
         TreeMap<Integer, Boolean> integerBooleanHashMap = parkingLot.addedInfo(car1);
@@ -48,7 +39,7 @@ public class ParkingLotTestCases {
     }
 
     @Test
-    public void whenUnparkThecar_ItShouldAssignSpaceEmptyForThatToken() {
+    public void whenUnparkThecar_ItShouldAssignSpaceEmptyForThatToken() throws ParkingLotException {
         ParkingLot parkingLot=new ParkingLot();
         CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
         CarInfo car2=new CarInfo("MH 01 CD 3367","Suv","red",2.15);
@@ -58,5 +49,24 @@ public class ParkingLotTestCases {
         parkingLot.unPark(token);
         System.out.println(integerBooleanHashMap2);
     }
+
+    @Test
+    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100() throws ParkingLotException {
+        Integer status=null;
+        try {
+            ParkingLot parkingLot = new ParkingLot();
+            for (int i = 1; i <= 100; i++) {
+                CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
+                TreeMap<Integer, Boolean> integerBooleanHashMap1 = parkingLot.addedInfo(car1); }
+
+            CarInfo car2 = new CarInfo("MH 01 CD 3367", "Suv", "red", 2.15);
+            TreeMap<Integer, Boolean> integerBooleanHashMap2 = parkingLot.addedInfo(car2);
+        }
+        catch (ParkingLotException e)
+        {
+            System.out.println("Slot1 is Full");
+            Assert.assertEquals(e.type,ParkingLotException.ExceptionType.Lot_Not_Available); }
+    }
+
 }
 

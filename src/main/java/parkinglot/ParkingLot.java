@@ -3,30 +3,18 @@ package parkinglot;
 import java.util.TreeMap;
 
 public class ParkingLot {
+    int adddata=0;
 
-    TreeMap<Integer, CarInfo> data = new TreeMap<Integer, CarInfo>();
+    public int getData(CarInfo info) throws ParkingLotException {
+        CheckParkingSpace space=new CheckParkingSpace();
+         return adddata =adddata+ space.Adddata(info);
 
-    Integer token = 0;
-    int count=0;
 
-    public int park() {
-        count++;
-        return count;
-    }
-
-    public int addedInfo(CarInfo info) throws ParkingLotException {
-        int park = park();
-        if (park<=100) {
-            token++;
-            CarInfo put = data.put(token,info);
-            return token;
-        }
-        throw new ParkingLotException("Lot_Not_Available",ParkingLotException.ExceptionType.Lot_Not_Available);
     }
 
     public boolean unPark(int key) {
-       data.replace(key,null);
-       return true;
+        CheckParkingSpace space=new CheckParkingSpace();
+        return space.removeData(key);
     }
 
 }

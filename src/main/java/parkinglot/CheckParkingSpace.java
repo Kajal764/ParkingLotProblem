@@ -14,14 +14,27 @@ public class CheckParkingSpace
     }
 
     public int Adddata(CarInfo info) throws ParkingLotException {
-    CheckParkingSpace space=new CheckParkingSpace();
-    int park = space.park();
-        if (park<=100) {
-            token++;
-            CarInfo put = data.put(token, info);
-            return token;
+       try {
+           CheckParkingSpace space = new CheckParkingSpace();
+           int park = space.park();
+           if (park <= 100) {
+               token++;
+               CarInfo put = data.put(token, info);
+               return token;
+           }
+           throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available); }
+       finally {
+          informAirportSecurity();
+       }
+    }
+
+    public LotStatus.Status informAirportSecurity() throws ParkingLotException {
+        AirportSecurity security = new AirportSecurity();
+        if (count <= 100) {
+            return security.getStatus(LotStatus.Status.Lot_Empty);
         }
-        throw new ParkingLotException("Lot_Not_Available",ParkingLotException.ExceptionType.Lot_Not_Available);
+        return security.getStatus(LotStatus.Status.Lot_Full);
+
     }
 
     public boolean removeData(int key) {

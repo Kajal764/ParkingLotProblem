@@ -8,7 +8,7 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
-        ParkingLot parkingLot=new ParkingLot();
+        ParkingLotService parkingLot=new ParkingLotService();
         CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
         CarInfo car2=new CarInfo("MH 01 CD 3367","Suv","red",2.15);
         CarInfo car3=new CarInfo("TN 7221","Mpv","white",2.15);
@@ -25,7 +25,7 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenParkCar_ItShouldFirstCheckSpaceIsEmpty_ThenSpaceTokenShouldReturnTrue() throws ParkingLotException {
-        ParkingLot parkingLot= new ParkingLot();
+        ParkingLotService parkingLot= new ParkingLotService();
         CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
         int integerBooleanHashMap = parkingLot.getData(car1);
         Assert.assertEquals(1,integerBooleanHashMap);
@@ -33,7 +33,7 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenUnparkThecar_ItShouldAssignSpaceEmptyForThatToken() throws ParkingLotException {
-        ParkingLot parkingLot=new ParkingLot();
+        ParkingLotService parkingLot=new ParkingLotService();
         CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
         CarInfo car2=new CarInfo("MH 01 CD 3367","Suv","red",2.15);
         parkingLot.getData(car1);
@@ -47,7 +47,7 @@ public class ParkingLotTestCases {
     public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100() throws ParkingLotException {
         Integer status=null;
         try {
-            ParkingLot parkingLot = new ParkingLot();
+            ParkingLotService parkingLot = new ParkingLotService();
             for (int i = 1; i <= 100; i++) {
                 CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
                 int integerBooleanHashMap1 = parkingLot.getData(car1); }
@@ -58,13 +58,33 @@ public class ParkingLotTestCases {
         catch (ParkingLotException e)
         {
             System.out.println("Slot1 Is Full");
-            Assert.assertEquals(e.type,ParkingLotException.ExceptionType.Lot_Not_Available); }
+            Assert.assertEquals(e.type,ParkingLotException.ExceptionType.Parking_Lot_Full); }
     }
 
+    @Test
+    public void whenLotFull_ItShouldInformAirportSecurityService() throws ParkingLotException {
+        try {
+            ParkingLotService parkingLot = new ParkingLotService();
+            for (int i = 1; i <= 103; i++) {
+                CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
+                parkingLot.getData(car1);
+            }
+        }
+        catch (ParkingLotException e)
+        {
+            System.out.println("Slot1 Is Full");
+            Assert.assertEquals(e.type,ParkingLotException.ExceptionType.Parking_Lot_Full); }
+        }
 
-
-
-
+    @Test
+    public void whenLotEmpty_ItShouldReturnEmptySlotStatus() throws ParkingLotException {
+        ParkingLotService parkingLot = new ParkingLotService();
+        CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
+        parkingLot.getData(car1);
+        LotStatus.Status status = parkingLot.checkStatus();
+        Assert.assertEquals( LotStatus.Status.Lot_Empty,status);
+    }
 
 }
+
 

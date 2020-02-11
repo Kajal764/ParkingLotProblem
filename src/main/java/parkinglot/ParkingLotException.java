@@ -3,7 +3,9 @@ package parkinglot;
 public class ParkingLotException extends Throwable{
 
     enum ExceptionType{
-        Lot_Not_Available
+        Lot_Not_Available,
+        Parking_Lot_Full
+
     }
     ExceptionType type;
 

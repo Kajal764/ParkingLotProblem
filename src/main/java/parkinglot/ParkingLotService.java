@@ -13,7 +13,7 @@ public class ParkingLotService {
     }
 
     public LotStatus.Status checkStatusForAirport() {
-       return space.informAirportSecurity();
+       return space.informOwner();
     }
 
     public LotStatus.Status checkStatusForOwner()  {

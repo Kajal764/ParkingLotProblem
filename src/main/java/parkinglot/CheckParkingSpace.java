@@ -3,18 +3,20 @@ package parkinglot;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static parkinglot.AirportSecurity.getStatus;
+
 public class CheckParkingSpace
 {
     int count;
     int token;
-    Map<Integer, CarInfo> data = new TreeMap<Integer, CarInfo>();
+    Map<Integer, CarInfo> data = new TreeMap<>();
 
    public int park(){
         count++;
         return count;
     }
 
-    public int  Adddata(CarInfo info) throws ParkingLotException {
+    public int  Adddata(CarInfo info) {
         CheckParkingSpace space=new CheckParkingSpace();
         int park = space.park();
         if (park<=100) {
@@ -23,33 +25,21 @@ public class CheckParkingSpace
             return token;
         }
     informOwner();
-    informAirportSecurity();
     return 0;
     }
 
     public LotStatus.Status informOwner()
     {
-        OwnerInfo info=new OwnerInfo();
-        if (count <= 100) {
-            return info.getStatus(LotStatus.Status.Lot_Available);
-        }
-        return info.getStatus(LotStatus.Status.Lot_Full);
+        if (count <= 100)
+            return getStatus(LotStatus.Status.Lot_Available);
+        return getStatus(LotStatus.Status.Lot_Full);
     }
 
-    public  LotStatus.Status informAirportSecurity()
-    {
-        AirportSecurity security = new AirportSecurity();
-        if (count<= 100) {
-            return security.getStatus(LotStatus.Status.Lot_Available);
-        }
-        return security.getStatus(LotStatus.Status.Lot_Full);
-    }
 
     public boolean removeData(int key) {
         data.remove(key);
         count--;
         informOwner();
-        informAirportSecurity();
         return true;
     }
 }

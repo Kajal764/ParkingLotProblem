@@ -32,7 +32,7 @@ public class ParkingLotTestCases {
 
 
     @Test
-    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100() throws ParkingLotException {
+    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100()  {
         Integer status=null;
         try {
             ParkingLotService parkingLot = new ParkingLotService();

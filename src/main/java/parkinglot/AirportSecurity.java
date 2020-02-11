@@ -2,7 +2,7 @@ package parkinglot;
 
 public class AirportSecurity {
 
-    public LotStatus.Status getStatus(LotStatus.Status status)  {
+    public static LotStatus.Status getStatus(LotStatus.Status status)  {
         return status;
     }
 }

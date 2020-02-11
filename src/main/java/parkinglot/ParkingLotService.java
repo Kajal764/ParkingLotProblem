@@ -1,23 +1,24 @@
 package parkinglot;
 
-
 public class ParkingLotService {
-    int adddata=0;
 
-    public int getData(CarInfo info) throws ParkingLotException {
-        CheckParkingSpace space=new CheckParkingSpace();
-         return adddata =adddata+ space.Adddata(info);
+    CheckParkingSpace space=new CheckParkingSpace();
+
+    public int park(CarInfo info) throws ParkingLotException {
+        return space.Adddata(info);
     }
 
     public boolean unPark(int key) {
-        CheckParkingSpace space=new CheckParkingSpace();
         return space.removeData(key);
     }
 
-    public LotStatus.Status checkStatus() throws ParkingLotException {
-        CheckParkingSpace space=new CheckParkingSpace();
+    public LotStatus.Status checkStatusForAirport() {
        return space.informAirportSecurity();
-
     }
+
+    public LotStatus.Status checkStatusForOwner()  {
+        return space.informOwner();
+    }
+
 }
 

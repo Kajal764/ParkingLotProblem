@@ -3,7 +3,7 @@ package parkinglot;
 public class LotStatus {
     enum Status {
         Lot_Full,
-        Lot_Empty
+        Lot_Available
 
     }
 }

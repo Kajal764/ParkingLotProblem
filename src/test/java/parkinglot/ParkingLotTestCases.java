@@ -17,8 +17,9 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
-        int park = service.park(vehicle);
-       Assert.assertEquals(1,park);
+        service.park(vehicle);
+        boolean isParked = service.isParked(vehicle);
+        Assert.assertTrue(isParked);
     }
 
 
@@ -27,11 +28,10 @@ public class ParkingLotTestCases {
         Integer status=null;
         try {
             ParkingLotService parkingLot = new ParkingLotService();
-            for (int i = 1; i <= 100; i++) {
-                int park = parkingLot.park(vehicle); }
+            for (int i=1; i <= 100; i++) {
+               parkingLot.park(vehicle); }
 
-           Object vehicle2=new Object();
-            int data = parkingLot.park(vehicle2);
+            Object vehicle2=new Object();
         }
         catch (ParkingLotException e)
         {

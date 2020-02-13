@@ -2,11 +2,12 @@ package parkinglot;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import static parkinglot.AirportSecurity.getStatus;
 
 public class ParkingLotService {
 
-    private final int capacity;
+    public int capacity;
 
     List slotList=new ArrayList<>();
 
@@ -14,15 +15,16 @@ public class ParkingLotService {
         this.capacity=capacity;
     }
 
+
     public void park(Object vehicle1) throws ParkingLotException{
 
-        if(slotList.size() == capacity)
-            throw new ParkingLotException("Lot_Not_Available",ParkingLotException.ExceptionType.Lot_Not_Available);
-        if (slotList.size() < capacity)
-            slotList.add(vehicle1);
+        if(slotList.size() == capacity) {
+            throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
 
-        checkStatusForAirport();
-        checkStatusForOwner();
+        } if (slotList.size() < capacity) {
+            slotList.add(vehicle1);
+        }
+        informAirportSecurity();
     }
 
     public boolean isParked(Object vehicle) {
@@ -31,9 +33,19 @@ public class ParkingLotService {
 
     public void unPark(Object vehicle)
     {
-        slotList.remove(vehicle);
-        checkStatusForAirport();
-        checkStatusForOwner();
+        int index = 0;
+        for(int i=0;i<slotList.size();i++)
+        {
+            if(slotList.get(i)==vehicle)
+                index=i;
+        }
+        slotList.set(index,0);
+    }
+
+    public LotStatus.Status informAirportSecurity() {
+        if(slotList.size()==capacity)
+            return getStatus(LotStatus.Status.Lot_Full);
+        return getStatus(LotStatus.Status.Lot_Available);
     }
 
     public boolean isUnparked(Object vehicle) {
@@ -42,12 +54,6 @@ public class ParkingLotService {
         return true;
     }
 
-    public LotStatus.Status checkStatusForAirport() {
-        if (slotList.size()<= 100)
-            return getStatus(LotStatus.Status.Lot_Available);
-        return getStatus(LotStatus.Status.Lot_Full);
-
-    }
 
     public LotStatus.Status checkStatusForOwner()  {
         if (slotList.size() <= 100)
@@ -56,4 +62,6 @@ public class ParkingLotService {
     }
 
 }
+
+
 

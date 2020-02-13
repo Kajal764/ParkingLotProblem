@@ -92,11 +92,16 @@ public class ParkingLotTestCases {
         service.park(vehicle);
         service.park(vehicle2);
         service.park(vehicle3);
-        service.unPark(1);
-        service.unPark(2);
-        LotStatus.Status status = service.checkStatusForOwner();
-        Assert.assertEquals(LotStatus.Status.Lot_Available, status);
+        service.unPark(vehicle2);
+        service.unPark(vehicle3);
+
+        OwnerInfo ownerInfo=new OwnerInfo();
+        boolean lotAvailable = ownerInfo.isLotAvailable();
+        Assert.assertTrue(lotAvailable);
+
+
     }
+
 
 }
 

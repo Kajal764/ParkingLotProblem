@@ -6,7 +6,6 @@ public class AirportSecurity {
 
     public static LotStatus.Status getStatus(LotStatus.Status status)  {
         capacity=status;
-
         return status;
     }
 

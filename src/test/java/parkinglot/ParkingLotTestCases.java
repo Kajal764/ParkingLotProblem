@@ -21,13 +21,6 @@ public class ParkingLotTestCases {
        Assert.assertEquals(1,park);
     }
 
-    @Test
-    public void whenParkCar_ItShouldFirstCheckSpaceIsEmpty_ThenSpaceTokenShouldReturnTrue() throws ParkingLotException {
-
-        int park = service.park(vehicle);
-        Assert.assertEquals(1,park);
-    }
-
 
     @Test
     public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100()  {
@@ -81,7 +74,6 @@ public class ParkingLotTestCases {
             Assert.assertEquals(LotStatus.Status.Lot_Available, status);
 
 }
-
 
 }
 

@@ -1,15 +1,14 @@
 package parkinglot;
 
-import java.util.Map;
-import java.util.TreeMap;
-
+import java.util.ArrayList;
+import java.util.List;
 import static parkinglot.AirportSecurity.getStatus;
 
 public class ParkingLotService {
 
     int count;
-    int token;
-    Map<Integer, Object> data = new TreeMap<Integer, Object>();
+
+    List slotList=new ArrayList<>();
 
     public int vehicleCount(){
         count++;
@@ -20,21 +19,18 @@ public class ParkingLotService {
 
         int park = vehicleCount();
         if (park<=100) {
-            token++;
-            data.put(token, vehicle1);
-            return token;
+            slotList.add(vehicle1);
+            return slotList.size();
         }
         checkStatusForAirport();
         checkStatusForOwner();
         return 0;
-
     }
 
     public boolean unPark(int key)
     {
-        data.remove(key);
+        slotList.remove(key);
         count--;
-
         checkStatusForAirport();
         checkStatusForOwner();
         return true;

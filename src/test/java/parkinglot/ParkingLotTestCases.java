@@ -1,33 +1,31 @@
 package parkinglot;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ParkingLotTestCases {
 
+    Object vehicle;
+    ParkingLotService service;
+
+    @Before
+    public void setUp() throws Exception {
+        vehicle=new Object();
+        service=new ParkingLotService();
+    }
 
     @Test
     public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
-        ParkingLotService parkingLot=new ParkingLotService();
-        CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
-        CarInfo car2=new CarInfo("MH 01 CD 3367","Suv","red",2.15);
-        CarInfo car3=new CarInfo("TN 7221","Mpv","white",2.15);
-        CarInfo car4=new CarInfo("RMD 387","Mrecedes","blue",2.30);
-        CarInfo car5=new CarInfo("AD 221","AudiR8","black",2.45);
-        parkingLot.park(car1);
-        parkingLot.park(car2);
-        parkingLot.park(car3);
-        parkingLot.park(car4);
-       int parkingCount = parkingLot.park(car5);
-       Assert.assertEquals(5,parkingCount);
+        int park = service.park(vehicle);
+       Assert.assertEquals(1,park);
     }
 
     @Test
     public void whenParkCar_ItShouldFirstCheckSpaceIsEmpty_ThenSpaceTokenShouldReturnTrue() throws ParkingLotException {
-        ParkingLotService parkingLot= new ParkingLotService();
-        CarInfo car1=new CarInfo("KL 7221","SuzukiSwift","white",2.0);
-        int integerBooleanHashMap = parkingLot.park(car1);
-        Assert.assertEquals(1,integerBooleanHashMap);
+
+        int park = service.park(vehicle);
+        Assert.assertEquals(1,park);
     }
 
 
@@ -37,11 +35,10 @@ public class ParkingLotTestCases {
         try {
             ParkingLotService parkingLot = new ParkingLotService();
             for (int i = 1; i <= 100; i++) {
-                CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
-                int integerBooleanHashMap1 = parkingLot.park(car1); }
+                int park = parkingLot.park(vehicle); }
 
-            CarInfo car2 = new CarInfo("MH 01 CD 3367", "Suv", "red", 2.15);
-            int data = parkingLot.park(car2);
+           Object vehicle2=new Object();
+            int data = parkingLot.park(vehicle2);
         }
         catch (ParkingLotException e)
         {
@@ -54,8 +51,7 @@ public class ParkingLotTestCases {
         try {
             ParkingLotService parkingLot = new ParkingLotService();
             for (int i = 1; i <= 103; i++) {
-                CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
-                parkingLot.park(car1);
+                parkingLot.park(vehicle);
             }
         }
         catch (ParkingLotException e)
@@ -67,8 +63,7 @@ public class ParkingLotTestCases {
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {
         ParkingLotService parkingLot = new ParkingLotService();
-        CarInfo car1 = new CarInfo("KL 7221", "SuzukiSwift", "white", 2.0);
-        parkingLot.park(car1);
+        parkingLot.park(vehicle);
         LotStatus.Status status = parkingLot.checkStatusForAirport();
         Assert.assertEquals( LotStatus.Status.Lot_Available,status);
     }
@@ -77,8 +72,7 @@ public class ParkingLotTestCases {
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
             ParkingLotService parkingLot = new ParkingLotService();
             for (int i = 1; i <= 101; i++) {
-                CarInfo car1 = new CarInfo("KL 7221 "+i, "SuzukiSwift", "white", 2.0);
-                parkingLot.park(car1);
+                parkingLot.park(vehicle);
             }
             parkingLot.unPark(1);
             parkingLot.unPark(2);

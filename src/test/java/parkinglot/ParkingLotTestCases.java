@@ -8,11 +8,12 @@ public class ParkingLotTestCases {
 
     Object vehicle;
     ParkingLotService service;
+    int capacity = 3;
 
     @Before
-    public void setUp() throws Exception {
-        vehicle=new Object();
-        service=new ParkingLotService();
+    public void setUp() {
+        vehicle = new Object();
+        service = new ParkingLotService(capacity);
     }
 
     @Test
@@ -31,57 +32,75 @@ public class ParkingLotTestCases {
     }
 
     @Test
-    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100()  {
-        Integer status=null;
-        try {
-            ParkingLotService parkingLot = new ParkingLotService();
-            for (int i=1; i <= 102; i++) {
-               parkingLot.park(vehicle); }
+    public void whenParkTheCar_ItsShouldParkTheCarTillItsCapacity() throws ParkingLotException {
 
-            Object vehicle2=new Object();
-            parkingLot.park(vehicle2);
-        }
-        catch (ParkingLotException e)
-        {
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+        service.park(vehicle);
+        service.park(vehicle2);
+        service.park(vehicle3);
+        boolean parked = service.isParked(vehicle);
+        boolean parked1 = service.isParked(vehicle2);
+        boolean parked2 = service.isParked(vehicle3);
+        Assert.assertTrue(parked && parked1 && parked2);
+
+    }
+
+    @Test
+    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThanLotCapacity() throws ParkingLotException {
+        try {
+            Object vehicle2 = new Object();
+            Object vehicle3 = new Object();
+            service.park(vehicle);
+            service.park(vehicle2);
+            service.park(vehicle3);
+
+            Object vehicle4 = new Object();
+            service.park(vehicle4);
+        } catch (ParkingLotException e) {
             System.out.println("Slot1 Is Full");
-            Assert.assertEquals(e.type,ParkingLotException.ExceptionType.Lot_Not_Available); }
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.Lot_Not_Available);
+        }
     }
 
     @Test
     public void whenLotFull_ItShouldInformAirportSecurityService() throws ParkingLotException {
         try {
-            ParkingLotService parkingLot = new ParkingLotService();
-            for (int i = 1; i <= 103; i++) {
-                parkingLot.park(vehicle);
-            }
-        }
-        catch (ParkingLotException e)
-        {
+            Object vehicle2 = new Object();
+            Object vehicle3 = new Object();
+            service.park(vehicle);
+            service.park(vehicle2);
+            service.park(vehicle3);
+
+            Object vehicle4 = new Object();
+            service.park(vehicle4);
+
+        } catch (ParkingLotException e) {
             System.out.println("Slot1 Is Full");
-            Assert.assertEquals(e.type,ParkingLotException.ExceptionType.Lot_Not_Available); }
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.Lot_Not_Available);
         }
+    }
 
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {
-        ParkingLotService parkingLot = new ParkingLotService();
-        parkingLot.park(vehicle);
-        LotStatus.Status status = parkingLot.checkStatusForAirport();
-        Assert.assertEquals( LotStatus.Status.Lot_Available,status);
+        service.park(vehicle);
+        LotStatus.Status status = service.checkStatusForAirport();
+        Assert.assertEquals(LotStatus.Status.Lot_Available, status);
     }
 
     @Test
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
-            ParkingLotService parkingLot = new ParkingLotService();
-            for (int i = 1; i <= 101; i++) {
-                parkingLot.park(vehicle);
-            }
-            parkingLot.unPark(1);
-            parkingLot.unPark(2);
-            LotStatus.Status status = parkingLot.checkStatusForOwner();
-            System.out.println("Slot1 Is Full");
-            Assert.assertEquals(LotStatus.Status.Lot_Available, status);
+        Object vehicle2 = new Object();
+        Object vehicle3 = new Object();
+        service.park(vehicle);
+        service.park(vehicle2);
+        service.park(vehicle3);
 
-}
+        service.unPark(1);
+        service.unPark(2);
+        LotStatus.Status status = service.checkStatusForOwner();
+        Assert.assertEquals(LotStatus.Status.Lot_Available, status);
+    }
 
 }
 

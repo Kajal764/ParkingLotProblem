@@ -6,15 +6,21 @@ import static parkinglot.AirportSecurity.getStatus;
 
 public class ParkingLotService {
 
-    int count;
+    private final int capacity;
 
     List slotList=new ArrayList<>();
 
+    public ParkingLotService(int capacity) {
+        this.capacity=capacity;
+    }
+
     public void park(Object vehicle1) throws ParkingLotException{
-        int park = count++;
-        if (park<=100) {
+
+        if(slotList.size() == capacity)
+            throw new ParkingLotException("Lot_Not_Available",ParkingLotException.ExceptionType.Lot_Not_Available);
+        if (slotList.size() < capacity)
             slotList.add(vehicle1);
-        }
+
         checkStatusForAirport();
         checkStatusForOwner();
     }
@@ -26,7 +32,6 @@ public class ParkingLotService {
     public void unPark(Object vehicle)
     {
         slotList.remove(vehicle);
-        count--;
         checkStatusForAirport();
         checkStatusForOwner();
     }
@@ -38,14 +43,14 @@ public class ParkingLotService {
     }
 
     public LotStatus.Status checkStatusForAirport() {
-        if (count <= 100)
+        if (slotList.size()<= 100)
             return getStatus(LotStatus.Status.Lot_Available);
         return getStatus(LotStatus.Status.Lot_Full);
 
     }
 
     public LotStatus.Status checkStatusForOwner()  {
-        if (count <= 100)
+        if (slotList.size() <= 100)
             return getStatus(LotStatus.Status.Lot_Available);
         return getStatus(LotStatus.Status.Lot_Full);
     }

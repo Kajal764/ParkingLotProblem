@@ -22,16 +22,24 @@ public class ParkingLotTestCases {
         Assert.assertTrue(isParked);
     }
 
+    @Test
+    public void whenDriverWantToUnparkHisCar_ThenHeShouldBeAbleToUnpark() throws ParkingLotException {
+        service.park(vehicle);
+        service.unPark(vehicle);
+        boolean unparked = service.isUnparked(vehicle);
+        Assert.assertTrue(unparked);
+    }
 
     @Test
     public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThan100()  {
         Integer status=null;
         try {
             ParkingLotService parkingLot = new ParkingLotService();
-            for (int i=1; i <= 100; i++) {
+            for (int i=1; i <= 102; i++) {
                parkingLot.park(vehicle); }
 
             Object vehicle2=new Object();
+            parkingLot.park(vehicle2);
         }
         catch (ParkingLotException e)
         {

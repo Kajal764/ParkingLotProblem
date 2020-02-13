@@ -11,7 +11,6 @@ public class ParkingLotService {
     List slotList=new ArrayList<>();
 
     public void park(Object vehicle1) throws ParkingLotException{
-
         int park = count++;
         if (park<=100) {
             slotList.add(vehicle1);
@@ -24,17 +23,21 @@ public class ParkingLotService {
         return slotList.contains(vehicle);
     }
 
-    public boolean unPark(int key)
+    public void unPark(Object vehicle)
     {
-        slotList.remove(key);
+        slotList.remove(vehicle);
         count--;
         checkStatusForAirport();
         checkStatusForOwner();
+    }
+
+    public boolean isUnparked(Object vehicle) {
+        if(slotList.contains(vehicle))
+            return false;
         return true;
     }
 
     public LotStatus.Status checkStatusForAirport() {
-
         if (count <= 100)
             return getStatus(LotStatus.Status.Lot_Available);
         return getStatus(LotStatus.Status.Lot_Full);
@@ -42,12 +45,10 @@ public class ParkingLotService {
     }
 
     public LotStatus.Status checkStatusForOwner()  {
-
         if (count <= 100)
             return getStatus(LotStatus.Status.Lot_Available);
         return getStatus(LotStatus.Status.Lot_Full);
     }
-
 
 }
 

@@ -18,16 +18,16 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
-        service.park(vehicle);
-        boolean isParked = service.isParked(vehicle);
+        service.park(1,vehicle);
+        boolean isParked = service.isParked(1,vehicle);
         Assert.assertTrue(isParked);
     }
 
     @Test
     public void whenDriverWantToUnparkHisCar_ThenHeShouldBeAbleToUnpark() throws ParkingLotException {
-        service.park(vehicle);
-        service.unPark(vehicle);
-        boolean unparked = service.isUnparked(vehicle);
+        service.park(1,vehicle);
+        service.unPark(1,vehicle);
+        boolean unparked = service.isUnparked(1,vehicle);
         Assert.assertTrue(unparked);
     }
 
@@ -36,12 +36,12 @@ public class ParkingLotTestCases {
 
         Object vehicle2 = new Object();
         Object vehicle3 = new Object();
-        service.park(vehicle);
-        service.park(vehicle2);
-        service.park(vehicle3);
-        boolean parked = service.isParked(vehicle);
-        boolean parked1 = service.isParked(vehicle2);
-        boolean parked2 = service.isParked(vehicle3);
+        service.park(1,vehicle);
+        service.park(2,vehicle2);
+        service.park(3,vehicle3);
+        boolean parked = service.isParked(1,vehicle);
+        boolean parked1 = service.isParked(2,vehicle2);
+        boolean parked2 = service.isParked(3,vehicle3);
         Assert.assertTrue(parked && parked1 && parked2);
 
     }
@@ -51,12 +51,12 @@ public class ParkingLotTestCases {
         try {
             Object vehicle2 = new Object();
             Object vehicle3 = new Object();
-            service.park(vehicle);
-            service.park(vehicle2);
-            service.park(vehicle3);
+            service.park(1,vehicle);
+            service.park(2,vehicle2);
+            service.park(3,vehicle3);
 
             Object vehicle4 = new Object();
-            service.park(vehicle4);
+            service.park(4,vehicle4);
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.Lot_Not_Available);
         }
@@ -67,9 +67,9 @@ public class ParkingLotTestCases {
         AirportSecurity airportSecurity=new AirportSecurity();
             Object vehicle2 = new Object();
             Object vehicle3 = new Object();
-            service.park(vehicle);
-            service.park(vehicle2);
-            service.park(vehicle3);
+            service.park(1,vehicle);
+            service.park(2,vehicle2);
+            service.park(3,vehicle3);
             boolean capacityFull = airportSecurity.isCapacityFull();
             Assert.assertTrue(capacityFull);
 
@@ -78,8 +78,8 @@ public class ParkingLotTestCases {
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {
         Object vehicle2 = new Object();
-        service.park(vehicle);
-        service.park(vehicle2);
+        service.park(1,vehicle);
+        service.park(2,vehicle2);
         AirportSecurity airportSecurity=new AirportSecurity();
         boolean capacityFull = airportSecurity.isCapacityFull();
         Assert.assertFalse(capacityFull);
@@ -89,20 +89,32 @@ public class ParkingLotTestCases {
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
         Object vehicle2 = new Object();
         Object vehicle3 = new Object();
-        service.park(vehicle);
-        service.park(vehicle2);
-        service.park(vehicle3);
-        service.unPark(vehicle2);
-        service.unPark(vehicle3);
+        service.park(1,vehicle);
+        service.park(2,vehicle2);
+        service.park(3,vehicle3);
+        service.unPark(2,vehicle2);
+        service.unPark(3,vehicle3);
 
         OwnerInfo ownerInfo=new OwnerInfo();
         boolean lotAvailable = ownerInfo.isLotAvailable();
         Assert.assertTrue(lotAvailable);
 
-
     }
 
+    @Test
+    public void whenParkTheCarOwner_ShouldBeAbleToParkCarBasedOnItsChoice() throws ParkingLotException {
+        service.park(5,vehicle);
+        boolean parked = service.isParked(5, vehicle);
+        Assert.assertTrue(parked);
+    }
 
+    @Test
+    public void whenUnParkedTheCar_Owner_ShouldNotChooseWrongSlotNoToUnParkTheCar() throws ParkingLotException {
+        service.park(2,vehicle);
+        service.unPark(3,vehicle);
+        boolean unparked = service.isUnparked(2, vehicle);
+       Assert.assertFalse(unparked);
+    }
 }
 
 

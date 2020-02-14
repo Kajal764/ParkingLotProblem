@@ -32,16 +32,26 @@ public class ParkingLotService {
         informOwner();
     }
 
-    public boolean isParked(int slotNo, Object vehicle) {
+    public boolean isUnparked(Object vehicle) {
+        if(slotMap.containsValue(vehicle))
+            return false;
+        return true;
 
-        if(slotMap.get(slotNo)==vehicle)
+    }
+
+    public boolean isParked(Object vehicle) {
+        if(slotMap.containsValue(vehicle))
             return true;
         return false;
     }
 
-    public void unPark(int index, Object vehicle) {
-            if (slotMap.get(index) == vehicle)
+    public void unPark(Object vehicle) {
+        int index=0;
+        for(int key=0; key<=capacity;key++ ) {
+            if (slotMap.containsValue(vehicle) && slotMap.containsKey(key))
+                    index=key;
                 slotMap.put(index,0);
+        }
         informOwner();
     }
 
@@ -59,12 +69,7 @@ public class ParkingLotService {
         return getStatus(LotStatus.Status.Lot_Available);
     }
 
-    public boolean isUnparked(Integer slotNo,Object vehicle) {
-        if(slotMap.get(slotNo)==vehicle)
-            return false;
-        return true;
 
-    }
 
 
 

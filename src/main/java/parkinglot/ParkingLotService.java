@@ -1,8 +1,8 @@
 package parkinglot;
 
-import java.util.ArrayList;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static parkinglot.AirportSecurity.getStatus;
@@ -23,13 +23,17 @@ public class ParkingLotService {
 
         if (slotMap.size() == capacity) {
             throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
-
         }
         if (slotMap.size() < capacity) {
             slotMap.put(slotNo,vehicle1);
+            getParkTime();
         }
         inform();
         informOwner();
+    }
+
+    public String getParkTime() {
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     public boolean isUnparked(Object vehicle) {
@@ -62,17 +66,11 @@ public class ParkingLotService {
 
     }
 
-
     public LotStatus.Status inform() {
         if(slotMap.size()==capacity)
             return getStatus(LotStatus.Status.Lot_Full);
         return getStatus(LotStatus.Status.Lot_Available);
     }
-
-
-
-
-
 
 }
 

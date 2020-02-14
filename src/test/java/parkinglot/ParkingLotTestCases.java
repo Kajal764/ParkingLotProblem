@@ -4,15 +4,19 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 public class ParkingLotTestCases {
 
-    Object vehicle;
+    VehicleInfo vehicle;
     ParkingLotService service;
     int capacity = 3;
 
+
     @Before
     public void setUp() {
-        vehicle = new Object();
+        vehicle = new VehicleInfo(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service = new ParkingLotService(capacity);
     }
 
@@ -113,6 +117,14 @@ public class ParkingLotTestCases {
         service.unPark(vehicle);
         boolean unparked = service.isUnparked(vehicle);
         Assert.assertTrue(unparked);
+    }
+
+    @Test
+    public void whenParkTheCar_TheParkingTimeAndInformParkTime_ShouldBeEqual() throws ParkingLotException {
+        service.park(1,vehicle);
+        String time = vehicle.getTime();
+        String parkTime = service.getParkTime();
+        Assert.assertEquals(parkTime,time);
     }
 
 }

@@ -11,7 +11,7 @@ public class ParkingLotTestCases {
 
     VehicleInfo vehicle;
     ParkingLotService service;
-    int capacity = 3;
+    int capacity = 100;
 
 
     @Before
@@ -22,14 +22,14 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
-        service.park(1,vehicle);
-        boolean isParked = service.isParked(vehicle);
-        Assert.assertTrue(isParked);
+        service.park(vehicle);
+        int isParked = service.isParked(vehicle);
+        Assert.assertEquals(1,isParked);
     }
 
     @Test
     public void whenDriverWantToUnparkHisCar_ThenHeShouldBeAbleToUnpark() throws ParkingLotException {
-        service.park(1,vehicle);
+        service.park(vehicle);
         service.unPark(vehicle);
         boolean unparked = service.isUnparked(vehicle);
         Assert.assertTrue(unparked);
@@ -38,28 +38,24 @@ public class ParkingLotTestCases {
     @Test
     public void whenParkTheCar_ItsShouldParkTheCarTillItsCapacity() throws ParkingLotException {
 
-        Object vehicle2 = new Object();
-        Object vehicle3 = new Object();
-        service.park(1,vehicle);
-        service.park(2,vehicle2);
-        service.park(3,vehicle3);
-        boolean parked = service.isParked(vehicle);
-        boolean parked1 = service.isParked(vehicle2);
-        boolean parked2 = service.isParked(vehicle3);
-        Assert.assertTrue(parked && parked1 && parked2);
-    }
+        int parked = 0;
+        for (int i = 1; i <= 100; i++) {
+            Object vehicle2 = new Object();
+            service.park(vehicle2);
+             parked = service.isParked(vehicle2);
+        }
+        Assert.assertEquals(100,parked);
+        }
+
 
     @Test
     public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThanLotCapacity() throws ParkingLotException {
         try {
-            Object vehicle2 = new Object();
-            Object vehicle3 = new Object();
-            service.park(1,vehicle);
-            service.park(2,vehicle2);
-            service.park(3,vehicle3);
-
-            Object vehicle4 = new Object();
-            service.park(4,vehicle4);
+            for (int i = 1; i <= 101; i++) {
+                Object vehicle2 = new Object();
+                service.park(vehicle2);
+                int parked = service.isParked(vehicle2);
+            }
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.Lot_Not_Available);
         }
@@ -68,11 +64,11 @@ public class ParkingLotTestCases {
     @Test
     public void whenLotFull_ItShouldInformAirportSecurityService() throws ParkingLotException {
         AirportSecurity airportSecurity=new AirportSecurity();
-            Object vehicle2 = new Object();
-            Object vehicle3 = new Object();
-            service.park(1,vehicle);
-            service.park(2,vehicle2);
-            service.park(3,vehicle3);
+        for (int i = 1; i <= 100; i++) {
+                Object vehicle2 = new Object();
+                service.park(vehicle2);
+                int parked = service.isParked(vehicle2);
+            }
             boolean capacityFull = airportSecurity.isCapacityFull();
             Assert.assertTrue(capacityFull);
 
@@ -81,8 +77,8 @@ public class ParkingLotTestCases {
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {
         Object vehicle2 = new Object();
-        service.park(1,vehicle);
-        service.park(2,vehicle2);
+        service.park(vehicle);
+        service.park(vehicle2);
         AirportSecurity airportSecurity=new AirportSecurity();
         boolean capacityFull = airportSecurity.isCapacityFull();
         Assert.assertFalse(capacityFull);
@@ -92,12 +88,11 @@ public class ParkingLotTestCases {
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
         Object vehicle2 = new Object();
         Object vehicle3 = new Object();
-        service.park(1,vehicle);
-        service.park(2,vehicle2);
-        service.park(3,vehicle3);
+        service.park(vehicle);
+        service.park(vehicle2);
+        service.park(vehicle3);
         service.unPark(vehicle2);
         service.unPark(vehicle3);
-
         OwnerInfo ownerInfo=new OwnerInfo();
         boolean lotAvailable = ownerInfo.isLotAvailable();
         Assert.assertTrue(lotAvailable);
@@ -106,14 +101,14 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenParkTheCarOwner_ShouldBeAbleToParkCarBasedOnItsChoice() throws ParkingLotException {
-        service.park(5,vehicle);
-        boolean parked = service.isParked( vehicle);
-        Assert.assertTrue(parked);
+        service.park(vehicle);
+        int parked = service.isParked(vehicle);
+        Assert.assertEquals(1,parked);
     }
 
     @Test
     public void whenUnParkedTheCar_SystermShouldAbleToUnparkedThatCarOnly() throws ParkingLotException {
-        service.park(1,vehicle);
+        service.park(vehicle);
         service.unPark(vehicle);
         boolean unparked = service.isUnparked(vehicle);
         Assert.assertTrue(unparked);
@@ -121,12 +116,26 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenParkTheCar_TheParkingTimeAndInformParkTime_ShouldBeEqual() throws ParkingLotException {
-        service.park(1,vehicle);
+        service.park(vehicle);
         String time = vehicle.getTime();
         String parkTime = service.getParkTime();
         Assert.assertEquals(parkTime,time);
     }
 
+    @Test
+    public void whenParkTheCar_ItShouldParkEvenlyInSlots() throws ParkingLotException {
+        service.park(vehicle);
+        int parked = service.isParked(vehicle);
+        VehicleInfo vehicle2 =new VehicleInfo(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle2);
+        int parked1 = service.isParked(vehicle2);
+        VehicleInfo vehicle3 =new VehicleInfo(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle3);
+        int parked2 = service.isParked(vehicle3);
+        Assert.assertEquals(1,parked);
+        Assert.assertEquals(21,parked1);
+        Assert.assertEquals(41,parked2);
+    }
 }
 
 

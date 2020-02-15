@@ -1,9 +1,6 @@
 package parkinglot;
 
-public class OwnerInfo implements ParkingStatus {
-
-    private static LotStatus.Status capacity;
-
+public class AirportSecurityInfo implements ParkingStatus {
     public static LotStatus.Status lotStatus;
 
     @Override
@@ -15,10 +12,9 @@ public class OwnerInfo implements ParkingStatus {
     @Override
     public boolean isLotAvailable() {
         if(lotStatus.equals(LotStatus.Status.Lot_Available))
-            return true;
-        return false;
+            return false;
+        return true;
 
     }
 
 }
-

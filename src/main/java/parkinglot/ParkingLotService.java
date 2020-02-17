@@ -13,9 +13,10 @@ public class ParkingLotService{
     public int slotNo=slot;
     public int count=0;
     public int i=1;
+    public int handicapSlot=1;
 
 
-    Map<Integer,Object> slotMap=new HashMap<>();
+    Map<Integer, Object> slotMap=new HashMap<>();
 
     public ParkingLotService(int capacity) {
         this.capacity = capacity;
@@ -37,37 +38,48 @@ public class ParkingLotService{
         return slotNo;
     }
 
-    public void park(Object vehicle1) throws ParkingLotException {
+    public void park(Object vehicle, boolean isHandicap) throws ParkingLotException {
 
-        if (slotMap.size() == capacity) {
+        if (slotMap.size() == capacity)
             throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
-        }
-        if (slotMap.size() < capacity) {
 
+        if (slotMap.size() < capacity) {
             assignSlot();
-            slotMap.put(slotNo,vehicle1);
-            getParkTime();
+            if(isHandicap)
+            {
+                if(slotMap.containsKey(handicapSlot))
+                {
+                    Object o = slotMap.get(handicapSlot);
+                    slotMap.put(handicapSlot,vehicle);
+                    slotMap.put(slotNo,o);
+                    handicapSlot=handicapSlot+20;
+                }
+            }
+            else {
+                slotMap.put(slotNo, vehicle);
+            }
         }
+        getParkTime();
         informAirportSecurity();
         informOwner();
     }
 
     public int isParked(Object vehicle) {
-        if(slotMap.containsValue(vehicle))
-            return slotNo;
-        return 0; }
-
+        for (int i = 1; i <= capacity; i++) {
+            if (slotMap.get(i)==vehicle)
+                return i;
+        }
+        return 0;
+    }
 
     public void unPark(Object vehicle) {
-        int index=0;
-        for(int key=0; key<=capacity;key++ ) {
-            if (slotMap.containsValue(vehicle) && slotMap.containsKey(key)) {
-                index = key;
-                slotMap.put(index, 0);
-            }
+        for (int i = 1; i <= capacity; i++) {
+            if (slotMap.get(i)==vehicle)
+                slotMap.put(i,null);
         }
         informOwner();
     }
+
 
     public boolean isUnparked(Object vehicle) {
         if(slotMap.containsValue(vehicle))
@@ -80,14 +92,13 @@ public class ParkingLotService{
 
 
     private LotStatus.Status informOwner() {
-            if (slotMap.size()<capacity || slotMap.containsValue(0))
-                return new OwnerInfo().getLotStatus(LotStatus.Status.Lot_Available);
-            return new OwnerInfo().getLotStatus(LotStatus.Status.Lot_Full);
-
+        if (slotMap.size() < capacity || slotMap.containsValue(null))
+            return new OwnerInfo().getLotStatus(LotStatus.Status.Lot_Available);
+        return new OwnerInfo().getLotStatus(LotStatus.Status.Lot_Full);
     }
 
     public LotStatus.Status informAirportSecurity(){
-        if(slotMap.size()<capacity || slotMap.containsValue(0))
+        if(slotMap.size()<capacity || slotMap.containsValue(null))
             return new AirportSecurityInfo().getLotStatus(LotStatus.Status.Lot_Available);
         return new AirportSecurityInfo().getLotStatus(LotStatus.Status.Lot_Full);
     }

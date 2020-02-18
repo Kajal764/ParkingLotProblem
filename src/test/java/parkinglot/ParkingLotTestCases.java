@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class ParkingLotTestCases {
 
@@ -16,7 +17,7 @@ public class ParkingLotTestCases {
 
     @Before
     public void setUp() {
-        vehicle = new VehicleInfo(LotStatus.CarSize.Large_Car,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        vehicle = new VehicleInfo(VehicleData.CarSize.Large_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service = new ParkingLotService(capacity);
     }
 
@@ -127,11 +128,11 @@ public class ParkingLotTestCases {
         service.park(vehicle,isHandicap);
         int parked = service.isParked(vehicle);
 
-        VehicleInfo vehicle2 =new VehicleInfo(LotStatus.CarSize.Small_Car,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2 =new VehicleInfo(VehicleData.CarSize.Small_Car, VehicleData.Color.Black,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle2,isHandicap);
         int parked1 = service.isParked(vehicle2);
 
-        VehicleInfo vehicle3 =new VehicleInfo(LotStatus.CarSize.Small_Car,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle3 =new VehicleInfo( VehicleData.CarSize.Small_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle3,isHandicap);
         int parked2 = service.isParked(vehicle3);
 
@@ -159,6 +160,37 @@ public class ParkingLotTestCases {
         service.park(vehicle,isHandicap);
         int parked = service.isParked(vehicle);
         Assert.assertEquals(1,parked);
+
+    }
+
+    @Test
+    public void givenWhiteCars_WhenParkThenItShouldBeAbleToInvestigateSlotNo() throws ParkingLotException {
+        service.park(vehicle,isHandicap);
+        service.isParked(vehicle);
+
+        VehicleInfo vehicle3 = new VehicleInfo(VehicleData.CarSize.Large_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle3,isHandicap);
+
+        List whiteCar = service.getWhiteCarList();
+       Assert.assertEquals(1,whiteCar.get(0));
+       Assert.assertEquals(21,whiteCar.get(1));
+
+    }
+
+    @Test
+    public void givenCars_WhenParkThenOnlyWhiteCarShouldGetAdd() throws ParkingLotException {
+        service.park(vehicle,isHandicap);
+        service.isParked(vehicle);
+
+        VehicleInfo vehicle2 = new VehicleInfo(VehicleData.CarSize.Large_Car,VehicleData.Color.Black,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle2,isHandicap);
+
+        VehicleInfo vehicle3 = new VehicleInfo(VehicleData.CarSize.Large_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle3,isHandicap);
+
+        List whiteCar = service.getWhiteCarList();
+        Assert.assertEquals(1,whiteCar.get(0));
+        Assert.assertEquals(41,whiteCar.get(1));
 
     }
 }

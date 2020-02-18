@@ -2,7 +2,9 @@ package parkinglot;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ParkingLotService{
@@ -16,6 +18,8 @@ public class ParkingLotService{
 
     Map<Integer, Object> slotMap=new HashMap<>();
     ParkingStatus parkingStatus = new ParkingStatus();
+
+    List whiteCarList=new ArrayList();
 
     public ParkingLotService(int capacity) {
         this.capacity = capacity;
@@ -60,6 +64,7 @@ public class ParkingLotService{
         }
         getParkTime();
         informStatus();
+        getWhiteCar(vehicle);
     }
 
 
@@ -91,9 +96,23 @@ public class ParkingLotService{
 
     private void informStatus() {
         if(slotMap.size() < capacity || slotMap.containsValue(null))
-            parkingStatus.getLotStatus(LotStatus.Status.Lot_Available);
+            parkingStatus.getLotStatus(VehicleData.Status.Lot_Available);
         else
-         parkingStatus.getLotStatus(LotStatus.Status.Lot_Full);
+         parkingStatus.getLotStatus(VehicleData.Status.Lot_Full);
+    }
+
+    public void getWhiteCar(Object vehicle) {
+        VehicleData.Color color = VehicleInfo.getColor();
+        if(color.equals(VehicleData.Color.White))
+        {
+            for (int i = 1; i <= capacity; i++) {
+                if (slotMap.get(i)==vehicle)
+                    whiteCarList.add(i);
+            } }
+    }
+
+    public List getWhiteCarList() {
+        return whiteCarList;
     }
 }
 

@@ -1,6 +1,6 @@
 package parkinglot;
 
-import parkinglot.LotStatus.Status;
+import parkinglot.VehicleData.Status;
 
 public class ParkingStatus {
 

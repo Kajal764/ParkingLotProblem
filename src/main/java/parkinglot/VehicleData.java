@@ -1,6 +1,6 @@
 package parkinglot;
 
-public class LotStatus {
+public class VehicleData {
 
     enum Status {
         Lot_Full,
@@ -11,6 +11,12 @@ public class LotStatus {
     {
         Large_Car,
         Small_Car
-
     }
+
+    enum Color{
+        White,
+        Blue,
+        Black
+    }
+
 }

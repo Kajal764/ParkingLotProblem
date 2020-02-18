@@ -10,32 +10,38 @@ import java.util.Map;
 public class ParkingLotService{
 
     public int capacity;
-    public int slot=-19;
-    public int slotNo=slot;
+    public int totalSlot;
+
     public int count=0;
     public int i=1;
+    public int value=0;
     public int handicapSlot=1;
+    int slotNo;
+
 
     Map<Integer, Object> slotMap=new HashMap<>();
     ParkingStatus parkingStatus = new ParkingStatus();
 
     List whiteCarList=new ArrayList();
 
-    public ParkingLotService(int capacity) {
+    public ParkingLotService(int capacity,int totalSlot) {
         this.capacity = capacity;
+        this.totalSlot=totalSlot;
     }
 
     public int assignSlot(){
+        int slotSize=capacity/totalSlot;
         count++;
         if(count >5)
         {
-            slotNo=slot+i;
-            count=1;
+            value=0;
             i++;
+            count=1;
         }
-        while (count <= 5)
+        while (count <= totalSlot)
         {
-            slotNo=slotNo+20;
+            slotNo=i+slotSize*value;
+            value++;
             break;
         }
         return slotNo;

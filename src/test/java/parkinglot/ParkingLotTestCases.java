@@ -12,13 +12,12 @@ public class ParkingLotTestCases {
 
     VehicleInfo vehicle;
     ParkingLotService service;
-    int capacity = 100;
     private boolean isHandicap;
 
     @Before
     public void setUp() {
         vehicle = new VehicleInfo(VehicleData.CarSize.Large_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-        service = new ParkingLotService(capacity);
+        service = new ParkingLotService(100,5);
     }
 
     @Test

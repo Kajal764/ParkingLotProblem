@@ -15,8 +15,8 @@ public class ParkingLotService{
     public int i=1;
     public int handicapSlot=1;
 
-
     Map<Integer, Object> slotMap=new HashMap<>();
+    ParkingStatus parkingStatus = new ParkingStatus();
 
     public ParkingLotService(int capacity) {
         this.capacity = capacity;
@@ -60,9 +60,9 @@ public class ParkingLotService{
             }
         }
         getParkTime();
-        informAirportSecurity();
-        informOwner();
+        informStatus();
     }
+
 
     public int isParked(Object vehicle) {
         for (int i = 1; i <= capacity; i++) {
@@ -77,7 +77,7 @@ public class ParkingLotService{
             if (slotMap.get(i)==vehicle)
                 slotMap.put(i,null);
         }
-        informOwner();
+        informStatus();
     }
 
 
@@ -90,17 +90,11 @@ public class ParkingLotService{
         return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
-
-    private LotStatus.Status informOwner() {
-        if (slotMap.size() < capacity || slotMap.containsValue(null))
-            return new OwnerInfo().getLotStatus(LotStatus.Status.Lot_Available);
-        return new OwnerInfo().getLotStatus(LotStatus.Status.Lot_Full);
-    }
-
-    public LotStatus.Status informAirportSecurity(){
-        if(slotMap.size()<capacity || slotMap.containsValue(null))
-            return new AirportSecurityInfo().getLotStatus(LotStatus.Status.Lot_Available);
-        return new AirportSecurityInfo().getLotStatus(LotStatus.Status.Lot_Full);
+    private void informStatus() {
+        if(slotMap.size() < capacity || slotMap.containsValue(null))
+            parkingStatus.getLotStatus(LotStatus.Status.Lot_Available);
+        else
+         parkingStatus.getLotStatus(LotStatus.Status.Lot_Full);
     }
 
 }

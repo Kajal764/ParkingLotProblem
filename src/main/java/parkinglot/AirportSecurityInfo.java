@@ -1,19 +1,17 @@
 package parkinglot;
 
-public class AirportSecurityInfo implements ParkingStatus {
-    public static LotStatus.Status lotStatus;
+public class AirportSecurityInfo {
 
-    @Override
-    public LotStatus.Status getLotStatus(LotStatus.Status status) {
-        lotStatus=status;
-        return lotStatus;
+    private static boolean parkingStatus;
+
+    public void isLotAvailable(boolean status) {
+        this.parkingStatus=status;
     }
 
-    @Override
-    public boolean isLotAvailable() {
-        if(lotStatus.equals(LotStatus.Status.Lot_Available))
-            return false;
-        return true;
+    public boolean checkStatus() {
+        if(parkingStatus)
+            return true;
+        return false;
 
     }
 

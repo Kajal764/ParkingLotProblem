@@ -68,9 +68,9 @@ public class ParkingLotTestCases {
                 Object vehicle2 = new Object();
                 service.park(vehicle2,isHandicap);
                 service.isParked(vehicle2);
-            }
-            boolean capacityFull = airportSecurity.isLotAvailable();
-            Assert.assertTrue(capacityFull);
+        }
+        boolean slotAvailable = airportSecurity.checkStatus();
+        Assert.assertFalse(slotAvailable);
 
     }
 
@@ -81,14 +81,13 @@ public class ParkingLotTestCases {
         service.park(vehicle,isHandicap);
         service.park(vehicle2,isHandicap);
         AirportSecurityInfo airportSecurity=new AirportSecurityInfo();
-        boolean capacityFull = airportSecurity.isLotAvailable();
-        Assert.assertFalse(capacityFull);
+        boolean capacityFull = airportSecurity.checkStatus();
+        Assert.assertTrue(capacityFull);
     }
 
     @Test
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
        Object vehicle1=new Object();
-       int parked=0;
        service.park(vehicle1,isHandicap);
         for (int i = 1; i <= 99; i++) {
             Object vehicle2 = new Object();
@@ -96,8 +95,8 @@ public class ParkingLotTestCases {
         }
         service.unPark(vehicle1);
         OwnerInfo ownerInfo=new OwnerInfo();
-        boolean lotAvailable = ownerInfo.isLotAvailable();
-        Assert.assertTrue(lotAvailable);
+        boolean lotAvailable = ownerInfo.checkStatus();
+        Assert.assertFalse(lotAvailable);
     }
 
     @Test

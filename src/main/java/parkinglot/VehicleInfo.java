@@ -9,8 +9,7 @@ public class VehicleInfo {
         this.time=currenttime;
     }
 
-    public String getTime(){
-        return time;
-    }
+    public String getTime()
+    { return time; }
 
 }

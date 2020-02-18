@@ -1,18 +1,15 @@
 package parkinglot;
 
-public class OwnerInfo implements ParkingStatus {
+public class OwnerInfo {
 
-    public static LotStatus.Status lotStatus;
+    private boolean parkingStatus;
 
-    @Override
-    public LotStatus.Status getLotStatus(LotStatus.Status status) {
-        lotStatus=status;
-        return lotStatus;
+    public void LotAvailable(boolean status) {
+        this.parkingStatus=status;
     }
 
-    @Override
-    public boolean isLotAvailable() {
-        if(lotStatus.equals(LotStatus.Status.Lot_Available))
+    public boolean checkStatus() {
+        if(parkingStatus)
             return true;
         return false;
     }

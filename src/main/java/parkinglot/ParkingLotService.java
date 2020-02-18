@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ParkingLotService{
 
     public int capacity;
@@ -86,7 +85,7 @@ public class ParkingLotService{
             return false;
         return true; }
 
-    public String getParkTime() {
+        public String getParkTime() {
         return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
@@ -96,7 +95,6 @@ public class ParkingLotService{
         else
          parkingStatus.getLotStatus(LotStatus.Status.Lot_Full);
     }
-
 }
 
 

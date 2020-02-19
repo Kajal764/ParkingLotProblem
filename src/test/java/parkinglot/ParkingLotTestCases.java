@@ -153,11 +153,15 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenLargeCars_WhenParkItShouldParkInFreeSpace_SoThatEasierToManoeuvre() throws ParkingLotException {
+        service.park(vehicle);
         VehicleInfo vehicle1=new VehicleInfo("Nisha",VehicleData.DriverStatus.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.CarSize.Large_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
-        int parked = service.isParked(vehicle1);
-        Assert.assertEquals(1,parked);
 
+        int parked = service.isParked(vehicle);
+        int parked1 = service.isParked(vehicle1);
+
+        Assert.assertEquals(1,parked);
+        Assert.assertEquals(39,parked1);
     }
 
     @Test

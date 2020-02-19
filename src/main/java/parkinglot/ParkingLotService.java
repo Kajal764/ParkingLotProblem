@@ -17,7 +17,6 @@ public class ParkingLotService{
     public int handicapSlot=1;
     int slotNo;
 
-
     Map<Integer, Object> slotMap=new HashMap<>();
     Map<Integer,Object> toyotoCarMap=new HashMap<>();
     ParkingStatus parkingStatus = new ParkingStatus();
@@ -56,15 +55,32 @@ public class ParkingLotService{
             assignSlot();
             if (VehicleData.DriverStatus.IsHandicap == vehicle.driverStatus)
                 parkNonHandicapDriverCar(vehicle);
-            if(VehicleData.DriverStatus.Normal==vehicle.driverStatus)
-                slotMap.put(slotNo, vehicle);
-
+            if(VehicleData.CarSize.Large_Car == vehicle.carSize)
+                parkLargeCar(vehicle);
+            if(VehicleData.DriverStatus.Normal == vehicle.driverStatus)
+                    slotMap.put(slotNo, vehicle);
         }
             getWhiteCar(vehicle);
             getBlueToyotoCars(vehicle);
             getParkTime();
             informStatus();
+    }
 
+    private void parkLargeCar(VehicleInfo vehicle) {
+
+        slotNo = slotNo + (capacity / totalSlot) - 2;
+        while (slotNo >0 )
+        {
+            if(slotMap.size()%5==0)
+            {
+                slotNo=slotNo-1;
+            }
+            if(slotMap.get(slotNo-1)==null && slotMap.get(slotNo+1)==null && slotMap.get(slotNo)==null) {
+                break;
+            }
+            slotNo=slotNo-1;
+        }
+        slotMap.putIfAbsent(slotNo,vehicle);
     }
 
     private void parkNonHandicapDriverCar(VehicleInfo vehicle) {
@@ -97,7 +113,8 @@ public class ParkingLotService{
     public boolean isUnparked(Object vehicle) {
         if(slotMap.containsValue(vehicle))
             return false;
-        return true; }
+        return true;
+    }
 
         public String getParkTime() {
             return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));

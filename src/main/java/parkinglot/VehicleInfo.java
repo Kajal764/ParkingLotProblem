@@ -4,6 +4,7 @@ package parkinglot;
 public class VehicleInfo {
 
 
+    public VehicleData.DriverStatus driverStatus;
     public VehicleData.Color colour;
     public VehicleData.carType carType;
     public String plateNo;
@@ -11,8 +12,9 @@ public class VehicleInfo {
     public VehicleData.CarSize carSize;
     public String time;
 
-    public VehicleInfo(String driverName, VehicleData.carType carType, String plateNo, VehicleData.CarSize carSize, VehicleData.Color color, String time) {
+    public VehicleInfo(String driverName, VehicleData.DriverStatus driverStatus, VehicleData.carType carType, String plateNo, VehicleData.CarSize carSize, VehicleData.Color color, String time) {
         this.driverName=driverName;
+        this.driverStatus=driverStatus;
         this.carType=carType;
         this.plateNo=plateNo;
         this.carSize=carSize;
@@ -27,7 +29,8 @@ public class VehicleInfo {
     @Override
     public String toString() {
         return "VehicleInfo{" +
-                "colour=" + colour +
+                "driverStatus=" + driverStatus +
+                ", colour=" + colour +
                 ", carType=" + carType +
                 ", plateNo='" + plateNo + '\'' +
                 ", driverName='" + driverName + '\'' +

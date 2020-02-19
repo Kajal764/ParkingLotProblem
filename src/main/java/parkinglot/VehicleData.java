@@ -22,4 +22,8 @@ public class VehicleData {
         Toyoto
     }
 
+    enum DriverStatus {
+        IsHandicap,
+        Normal
+    }
 }

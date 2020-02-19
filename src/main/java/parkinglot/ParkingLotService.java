@@ -47,30 +47,36 @@ public class ParkingLotService{
         return slotNo;
     }
 
-    public void park(VehicleInfo vehicle, boolean isHandicap) throws ParkingLotException {
+    public void park(VehicleInfo vehicle) throws ParkingLotException {
 
         if (slotMap.size() == capacity)
             throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
 
         if (slotMap.size() < capacity) {
             assignSlot();
-            if (isHandicap) {
-                if (slotMap.containsKey(handicapSlot)) {
+            if (VehicleData.DriverStatus.IsHandicap == vehicle.driverStatus)
+                parkNonHandicapDriverCar(vehicle);
+            if(VehicleData.DriverStatus.Normal==vehicle.driverStatus)
+                slotMap.put(slotNo, vehicle);
+
+        }
+            getWhiteCar(vehicle);
+            getBlueToyotoCars(vehicle);
+            getParkTime();
+            informStatus();
+
+    }
+
+    private void parkNonHandicapDriverCar(VehicleInfo vehicle) {
+        if (slotMap.containsKey(handicapSlot)) {
                     Object o = slotMap.get(handicapSlot);
                     slotMap.put(handicapSlot, vehicle);
                     slotMap.put(slotNo, o);
-                    handicapSlot = handicapSlot + 20;
-                }
-            } else {
-                slotMap.put(slotNo, vehicle);
-            }
+                    handicapSlot = handicapSlot + capacity/totalSlot;
         }
-        getWhiteCar(vehicle);
-        getBlueToyotoCars(vehicle);
-        getParkTime();
-        informStatus();
-
     }
+
+
     public int isParked(Object vehicle) {
         for (int i = 1; i <= capacity; i++) {
             if (slotMap.get(i)==vehicle)
@@ -94,7 +100,7 @@ public class ParkingLotService{
         return true; }
 
         public String getParkTime() {
-        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+            return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     private void informStatus() {

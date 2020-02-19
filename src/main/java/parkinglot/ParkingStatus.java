@@ -8,7 +8,6 @@ public class ParkingStatus {
     AirportSecurityInfo airportSecurityInfo=new AirportSecurityInfo();
     OwnerInfo ownerInfo =new OwnerInfo();
 
-
     public void getLotStatus(Status status) {
         lotStatus = status;
         if(lotStatus.equals(Status.Lot_Available))

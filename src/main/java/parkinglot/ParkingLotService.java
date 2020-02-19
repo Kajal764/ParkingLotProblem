@@ -11,7 +11,6 @@ public class ParkingLotService{
 
     public int capacity;
     public int totalSlot;
-
     public int count=0;
     public int i=1;
     public int value=0;
@@ -20,9 +19,10 @@ public class ParkingLotService{
 
 
     Map<Integer, Object> slotMap=new HashMap<>();
+    Map<Integer,Object> toyotoCarMap=new HashMap<>();
     ParkingStatus parkingStatus = new ParkingStatus();
 
-    List whiteCarList=new ArrayList();
+    List carList =new ArrayList();
 
     public ParkingLotService(int capacity,int totalSlot) {
         this.capacity = capacity;
@@ -47,33 +47,30 @@ public class ParkingLotService{
         return slotNo;
     }
 
-    public void park(Object vehicle, boolean isHandicap) throws ParkingLotException {
+    public void park(VehicleInfo vehicle, boolean isHandicap) throws ParkingLotException {
 
         if (slotMap.size() == capacity)
             throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
 
         if (slotMap.size() < capacity) {
             assignSlot();
-            if(isHandicap)
-            {
-                if(slotMap.containsKey(handicapSlot))
-                {
+            if (isHandicap) {
+                if (slotMap.containsKey(handicapSlot)) {
                     Object o = slotMap.get(handicapSlot);
-                    slotMap.put(handicapSlot,vehicle);
-                    slotMap.put(slotNo,o);
-                    handicapSlot=handicapSlot+20;
+                    slotMap.put(handicapSlot, vehicle);
+                    slotMap.put(slotNo, o);
+                    handicapSlot = handicapSlot + 20;
                 }
-            }
-            else {
+            } else {
                 slotMap.put(slotNo, vehicle);
             }
         }
+        getWhiteCar(vehicle);
+        getBlueToyotoCars(vehicle);
         getParkTime();
         informStatus();
-        getWhiteCar(vehicle);
+
     }
-
-
     public int isParked(Object vehicle) {
         for (int i = 1; i <= capacity; i++) {
             if (slotMap.get(i)==vehicle)
@@ -107,18 +104,39 @@ public class ParkingLotService{
          parkingStatus.getLotStatus(VehicleData.Status.Lot_Full);
     }
 
-    public void getWhiteCar(Object vehicle) {
-        VehicleData.Color color = VehicleInfo.getColor();
-        if(color.equals(VehicleData.Color.White))
+    public void getWhiteCar(VehicleInfo vehicle) {
+
+        if(vehicle.colour.equals(VehicleData.Color.White))
         {
             for (int i = 1; i <= capacity; i++) {
-                if (slotMap.get(i)==vehicle)
-                    whiteCarList.add(i);
-            } }
+                if (slotMap.get(i)==vehicle) {
+                    carList.add(i);
+                    break;
+                }
+            }
+        }
     }
 
-    public List getWhiteCarList() {
-        return whiteCarList;
+    public List getCarList() {
+        return carList;
+    }
+
+    public void getBlueToyotoCars(VehicleInfo vehicle) {
+
+        if(vehicle.colour.equals(VehicleData.Color.Blue) && vehicle.carType.equals(VehicleData.carType.Toyoto))
+        {
+            for(int i=1;i<=capacity;i++)
+            {
+                if(slotMap.get(i)==vehicle) {
+                    toyotoCarMap.put(i,vehicle);
+                    break;
+                }
+            }
+        }
+    }
+
+    public Map<Integer, Object> getToyotoCars() {
+        return toyotoCarMap;
     }
 }
 

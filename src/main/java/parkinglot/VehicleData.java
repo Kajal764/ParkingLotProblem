@@ -18,5 +18,8 @@ public class VehicleData {
         Blue,
         Black
     }
+    enum carType{
+        Toyoto
+    }
 
 }

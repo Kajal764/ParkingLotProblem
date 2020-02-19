@@ -12,7 +12,6 @@ public class AirportSecurityInfo {
         if(parkingStatus)
             return true;
         return false;
-
     }
 
 }

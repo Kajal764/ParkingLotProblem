@@ -20,12 +20,15 @@ public class ParkingLotTestCases {
         service = new ParkingLotService(100,5);
     }
 
+
     @Test
     public void whenDriverParkHisCar_SpaceTokenShouldReturnTrue() throws ParkingLotException {
         service.park(vehicle);
         int isParked = service.isParked(vehicle);
         Assert.assertEquals(1,isParked);
     }
+
+
 
     @Test
     public void whenDriverWantToUnparkHisCar_ThenHeShouldBeAbleToUnpark() throws ParkingLotException {
@@ -73,6 +76,23 @@ public class ParkingLotTestCases {
 
     }
 
+
+    @Test
+    public void givenCarwhenPark_ThenItShouldFirstCheckEmptySpaceT() throws ParkingLotException {
+        service.park(vehicle);
+        int parked = service.isParked(vehicle);
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",VehicleData.DriverStatus.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.CarSize.Small_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle1);
+        service.unPark(vehicle1);
+        service.isParked(vehicle1);
+
+        VehicleInfo vehicle2=new VehicleInfo("Nisha",VehicleData.DriverStatus.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.CarSize.Small_Car,VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle2);
+        int parked3 = service.isParked(vehicle2);
+
+        Assert.assertEquals(1,parked);
+        Assert.assertEquals(21,parked3);
+    }
 
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {

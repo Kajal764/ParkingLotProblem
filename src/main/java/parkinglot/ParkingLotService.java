@@ -2,10 +2,7 @@ package parkinglot;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ParkingLotService{
 
@@ -53,17 +50,33 @@ public class ParkingLotService{
 
         if (slotMap.size() < capacity) {
             assignSlot();
+
             if (VehicleData.DriverStatus.IsHandicap == vehicle.driverStatus)
                 parkNonHandicapDriverCar(vehicle);
             if(VehicleData.CarSize.Large_Car == vehicle.carSize)
                 parkLargeCar(vehicle);
-            if(VehicleData.DriverStatus.Normal == vehicle.driverStatus)
-                    slotMap.put(slotNo, vehicle);
+            if(VehicleData.DriverStatus.Normal == vehicle.driverStatus) {
+                parkIfNull(vehicle);
+            }
         }
             getWhiteCar(vehicle);
             getBlueToyotoCars(vehicle);
             getParkTime();
             informStatus();
+    }
+
+    private void parkIfNull(VehicleInfo vehicle) {
+
+        for(int i=slotNo; i>0; i--) {
+            if(slotMap.containsKey(i) && slotMap.get(i)==null) {
+                slotNo=i;
+                value--;
+                break;
+            }
+
+        }
+        slotMap.put(slotNo,vehicle);
+
     }
 
     private void parkLargeCar(VehicleInfo vehicle) {

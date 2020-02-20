@@ -192,7 +192,6 @@ public class ParkingLotTestCases {
         service.park(vehicle1);
 
         Map<Integer, Object> carList = service.getCarList(VehicleData.White);
-        System.out.println(carList);
         Assert.assertTrue(carList.containsKey(1));
         Assert.assertTrue(carList.containsKey(21));
     }
@@ -234,6 +233,19 @@ public class ParkingLotTestCases {
         Assert.assertFalse(toyotoCars.containsKey(21));
         Assert.assertTrue(toyotoCars.containsKey(1));
     }
+
+    @Test
+    public void givenCars_WhenPark_ItShouldAbleToFindBMWCars() throws ParkingLotException {
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        service.park(vehicle1);
+        service.park(vehicle2);
+
+        Map<Integer, Object> cars = service.getCarList(VehicleData.BMW);
+        Assert.assertTrue(cars.containsKey(1));
+        Assert.assertFalse(cars.containsKey(21));
+    }
+
 
 
 }

@@ -8,7 +8,8 @@ public enum VehicleData {
     White,
     Blue,
     Black,
-    Toyoto
+    Toyoto,
+    BMW
 
 
 }

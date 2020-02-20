@@ -1,6 +1,8 @@
 package parkinglot;
 
 
+import java.time.LocalTime;
+
 public class VehicleInfo {
 
     public CHECKFORPARK checkForPark;
@@ -8,10 +10,10 @@ public class VehicleInfo {
     public VehicleData carType;
     public String plateNo;
     public String driverName;
-    public String time;
+    public LocalTime time;
 
 
-    public VehicleInfo(String driverName, CHECKFORPARK checkforpark, VehicleData carType, String plateNo, VehicleData color, String time) {
+    public VehicleInfo(String driverName, CHECKFORPARK checkforpark, VehicleData carType, String plateNo, VehicleData color, LocalTime time) {
         this.driverName=driverName;
         this.checkForPark=checkforpark;
         this.carType=carType;
@@ -24,8 +26,8 @@ public class VehicleInfo {
         return checkForPark;
     }
 
-    public String getTime()
-    { return time; }
+//    public LocalTime getTime()
+//    { return time; }
 
 
     @Override

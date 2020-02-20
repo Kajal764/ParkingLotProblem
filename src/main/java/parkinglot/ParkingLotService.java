@@ -1,7 +1,6 @@
 package parkinglot;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,10 +15,9 @@ public class ParkingLotService {
     int slotNo;
 
     Map<Integer, Object> slotMap = new HashMap<>();
-    Map<Integer, Object> toyotoCarMap = new HashMap<>();
+    List<Integer> timeList = new ArrayList<>();
     ParkingStatus parkingStatus = new ParkingStatus();
 
-    List carList = new ArrayList();
 
     public ParkingLotService(int capacity, int totalSlot) {
         this.capacity = capacity;
@@ -52,9 +50,6 @@ public class ParkingLotService {
             vehicle.getCheckForPark().parkCar(vehicle, slotNo, this);
 
         }
-//            getWhiteCar(vehicle);
-//            getBlueToyotoCars(vehicle);
-        getParkTime();
         informStatus();
     }
 
@@ -124,10 +119,6 @@ public class ParkingLotService {
         return true;
     }
 
-    public String getParkTime() {
-        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
-    }
-
     private void informStatus() {
         if (slotMap.size() < capacity || slotMap.containsValue(null))
             parkingStatus.getLotStatus(VehicleData.Lot_Available);
@@ -154,6 +145,21 @@ public class ParkingLotService {
     }
 
 
+    public List<Integer> getCarWithin30Min() {
+        for( int i=1;i<=capacity ;i++ )
+        {
+            if(slotMap.get(i)!=null)
+            {
+                VehicleInfo o = (VehicleInfo) slotMap.get(i);
+                LocalTime parkTime = o.time;
+                LocalTime currentTimeThirtyMinAgo = LocalTime.now().minusMinutes(30);
+
+                int compare = currentTimeThirtyMinAgo.compareTo(parkTime);
+                if(compare==1)
+                    timeList.add(i); }
+        }
+    return timeList;
+    }
 }
 
 

@@ -1,20 +1,14 @@
 package parkinglot;
 
-public class VehicleData {
+public enum VehicleData {
 
-    enum Status {
-        Lot_Full,
-        Lot_Available
-    }
 
-    enum Color{
-        White,
-        Blue,
-        Black
-    }
+    Lot_Full,
+    Lot_Available,
+    White,
+    Blue,
+    Black,
+    Toyoto
 
-    enum carType{
-        Toyoto
-    }
 
 }

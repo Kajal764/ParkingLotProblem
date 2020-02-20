@@ -4,14 +4,14 @@ package parkinglot;
 public class VehicleInfo {
 
     public CHECKFORPARK checkForPark;
-    public VehicleData.Color colour;
-    public VehicleData.carType carType;
+    public VehicleData colour;
+    public VehicleData carType;
     public String plateNo;
     public String driverName;
     public String time;
 
 
-    public VehicleInfo(String driverName, CHECKFORPARK checkforpark, VehicleData.carType carType, String plateNo, VehicleData.Color color, String time) {
+    public VehicleInfo(String driverName, CHECKFORPARK checkforpark, VehicleData carType, String plateNo, VehicleData color, String time) {
         this.driverName=driverName;
         this.checkForPark=checkforpark;
         this.carType=carType;

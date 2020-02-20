@@ -3,40 +3,39 @@ package parkinglot;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
-public class ParkingLotService{
+public class ParkingLotService {
 
     public int capacity;
     public int totalSlot;
-    public int count=0;
-    public int i=1;
-    public int value=0;
-    public int handicapSlot=1;
+    public int count = 0;
+    public int i = 1;
+    public int value = 0;
+    public int handicapSlot = 1;
     int slotNo;
 
-    Map<Integer, Object> slotMap=new HashMap<>();
-    Map<Integer,Object> toyotoCarMap=new HashMap<>();
+    Map<Integer, Object> slotMap = new HashMap<>();
+    Map<Integer, Object> toyotoCarMap = new HashMap<>();
     ParkingStatus parkingStatus = new ParkingStatus();
 
-    List carList =new ArrayList();
+    List carList = new ArrayList();
 
     public ParkingLotService(int capacity, int totalSlot) {
         this.capacity = capacity;
-        this.totalSlot=totalSlot;
+        this.totalSlot = totalSlot;
     }
 
-    public int assignSlot(){
-        int slotSize=capacity/totalSlot;
+    public int assignSlot() {
+        int slotSize = capacity / totalSlot;
         count++;
-        if(count >5)
-        {
-            value=0;
+        if (count > 5) {
+            value = 0;
             i++;
-            count=1;
+            count = 1;
         }
-        while (count <= totalSlot)
-        {
-            slotNo=i+slotSize*value;
+        while (count <= totalSlot) {
+            slotNo = i + slotSize * value;
             value++;
             break;
         }
@@ -50,55 +49,53 @@ public class ParkingLotService{
 
         if (slotMap.size() < capacity) {
             assignSlot();
-            vehicle.getCheckForPark().parkCar(vehicle,slotNo,this);
+            vehicle.getCheckForPark().parkCar(vehicle, slotNo, this);
 
         }
-            getWhiteCar(vehicle);
-            getBlueToyotoCars(vehicle);
-            getParkTime();
-            informStatus();
+//            getWhiteCar(vehicle);
+//            getBlueToyotoCars(vehicle);
+        getParkTime();
+        informStatus();
     }
 
-    public void parkIfNull(VehicleInfo vehicle,int slotNo) {
-        this.slotNo=slotNo;
-        for(int i = slotNo; i>0; i--) {
-            if(slotMap.containsKey(i) && slotMap.get(i)==null) {
-                this.slotNo =i;
+    public void parkIfNull(VehicleInfo vehicle, int slotNo) {
+        this.slotNo = slotNo;
+        for (int i = slotNo; i > 0; i--) {
+            if (slotMap.containsKey(i) && slotMap.get(i) == null) {
+                this.slotNo = i;
                 break;
             }
 
         }
-        slotMap.put(this.slotNo,vehicle);
+        slotMap.put(this.slotNo, vehicle);
 
     }
 
-    public void parkLargeCar(VehicleInfo vehicle,int No) {
-        this.slotNo=No;
+    public void parkLargeCar(VehicleInfo vehicle, int No) {
+        this.slotNo = No;
         slotNo = this.slotNo + (capacity / totalSlot) - 2;
-        while (slotNo >0 )
-        {
-            if(slotMap.size()%5==0)
-            {
-                slotNo=slotNo-1;
+        while (slotNo > 0) {
+            if (slotMap.size() % 5 == 0) {
+                slotNo = slotNo - 1;
             }
-            if(slotMap.get(slotNo-1)==null && slotMap.get(slotNo+1)==null && slotMap.get(slotNo)==null) {
+            if (slotMap.get(slotNo - 1) == null && slotMap.get(slotNo + 1) == null && slotMap.get(slotNo) == null) {
                 break;
             }
-            slotNo=slotNo-1;
+            slotNo = slotNo - 1;
         }
-        slotMap.putIfAbsent(slotNo,vehicle);
+        slotMap.putIfAbsent(slotNo, vehicle);
     }
 
     public int parkHandicapDriverCar(VehicleInfo vehicle, int slotNo) {
-        this.slotNo=slotNo;
+        this.slotNo = slotNo;
         if (slotMap.containsKey(handicapSlot)) {
-                    Object o = slotMap.get(handicapSlot);
-                    slotMap.put(handicapSlot, vehicle);
-                    slotMap.put(this.slotNo, o);
-                    handicapSlot = handicapSlot + capacity/totalSlot;
-                    return 0;
+            Object o = slotMap.get(handicapSlot);
+            slotMap.put(handicapSlot, vehicle);
+            slotMap.put(this.slotNo, o);
+            handicapSlot = handicapSlot + capacity / totalSlot;
+            return 0;
         }
-        slotMap.put(this.slotNo,vehicle);
+        slotMap.put(this.slotNo, vehicle);
         System.out.println(slotMap);
         return this.slotNo;
     }
@@ -106,7 +103,7 @@ public class ParkingLotService{
 
     public int isParked(Object vehicle) {
         for (int i = 1; i <= capacity; i++) {
-            if (slotMap.get(i)==vehicle)
+            if (slotMap.get(i) == vehicle)
                 return i;
         }
         return 0;
@@ -114,64 +111,49 @@ public class ParkingLotService{
 
     public void unPark(Object vehicle) {
         for (int i = 1; i <= capacity; i++) {
-            if (slotMap.get(i)==vehicle)
-                slotMap.put(i,null);
+            if (slotMap.get(i) == vehicle)
+                slotMap.put(i, null);
         }
         informStatus();
     }
 
 
     public boolean isUnparked(Object vehicle) {
-        if(slotMap.containsValue(vehicle))
+        if (slotMap.containsValue(vehicle))
             return false;
         return true;
     }
 
-        public String getParkTime() {
-            return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
+    public String getParkTime() {
+        return LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     private void informStatus() {
-        if(slotMap.size() < capacity || slotMap.containsValue(null))
-            parkingStatus.getLotStatus(VehicleData.Status.Lot_Available);
+        if (slotMap.size() < capacity || slotMap.containsValue(null))
+            parkingStatus.getLotStatus(VehicleData.Lot_Available);
         else
-         parkingStatus.getLotStatus(VehicleData.Status.Lot_Full);
+            parkingStatus.getLotStatus(VehicleData.Lot_Full);
     }
 
-    public void getWhiteCar(VehicleInfo vehicle) {
+    public Map<Integer, Object> getCarList(VehicleData... findValue) {
 
-        if(vehicle.colour.equals(VehicleData.Color.White))
+
+        Map<Integer, Object> collect = slotMap.entrySet().stream()
+                .filter(Entry -> Entry.getValue()
+                .toString().toLowerCase().contains(findValue[0].toString().toLowerCase()))
+                .collect(Collectors.toMap(m -> m.getKey(), m -> m.getValue()));
+        if(findValue.length>1)
         {
-            for (int i = 1; i <= capacity; i++) {
-                if (slotMap.get(i)==vehicle) {
-                    carList.add(i);
-                    break;
-                }
-            }
+            collect=collect.entrySet().stream()
+                    .filter(m-> m.getValue()
+                            .toString().contains(findValue[1].toString()))
+                    .collect(Collectors.toMap(m->m.getKey(),m->m.getValue()));
+
         }
+        return collect;
     }
 
-    public List getCarList() {
-        return carList;
-    }
 
-    public void getBlueToyotoCars(VehicleInfo vehicle) {
-
-        if(vehicle.colour.equals(VehicleData.Color.Blue) && vehicle.carType.equals(VehicleData.carType.Toyoto))
-        {
-            for(int i=1;i<=capacity;i++)
-            {
-                if(slotMap.get(i)==vehicle) {
-                    toyotoCarMap.put(i,vehicle);
-                    break;
-                }
-            }
-        }
-    }
-
-    public Map<Integer, Object> getToyotoCars() {
-        return toyotoCarMap;
-    }
 }
 
 

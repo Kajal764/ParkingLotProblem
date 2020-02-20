@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 public class ParkingLotTestCases {
@@ -16,7 +15,7 @@ public class ParkingLotTestCases {
 
     @Before
     public void setUp() {
-        vehicle=new VehicleInfo("Sonam",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        vehicle=new VehicleInfo("Sonam",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service = new ParkingLotService(100,5);
     }
 
@@ -40,7 +39,7 @@ public class ParkingLotTestCases {
 
         int parked = 0;
         for (int i = 1; i <= 100; i++) {
-            VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+            VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
             service.park(vehicle1);
              parked = service.isParked(vehicle1);
         }
@@ -64,7 +63,7 @@ public class ParkingLotTestCases {
     public void whenLotFull_ItShouldInformAirportSecurityService() throws ParkingLotException {
         AirportSecurityInfo airportSecurity=new AirportSecurityInfo();
         for (int i = 1; i <= 100; i++) {
-            VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+            VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
             service.park(vehicle2);
             service.isParked(vehicle2);
         }
@@ -78,12 +77,12 @@ public class ParkingLotTestCases {
     public void givenCarwhenPark_ThenItShouldFirstCheckEmptySpace() throws ParkingLotException {
         service.park(vehicle);
         int parked = service.isParked(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
         service.unPark(vehicle1);
         service.isParked(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle2);
         int parked3 = service.isParked(vehicle2);
 
@@ -94,7 +93,7 @@ public class ParkingLotTestCases {
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {
         service.park(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Smita",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Smita",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
         AirportSecurityInfo airportSecurity=new AirportSecurityInfo();
         boolean capacityFull = airportSecurity.checkStatus();
@@ -103,7 +102,7 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
        service.park(vehicle);
         for (int i = 1; i <= 99; i++) {
             Object vehicle2 = new Object();
@@ -143,11 +142,11 @@ public class ParkingLotTestCases {
         service.park(vehicle);
         int parked = service.isParked(vehicle);
 
-        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
         int parked1 = service.isParked(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("Kajal",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Kajal",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle2);
         int parked2 = service.isParked(vehicle2);
 
@@ -160,7 +159,7 @@ public class ParkingLotTestCases {
     public void whenHandicapDriverWantToParkHisCar_ThatSlotShouldBeNearest() throws ParkingLotException {
         service.park(vehicle);
 
-        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.Handicap,  VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.Handicap,  VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
 
         service.park(vehicle1);
         int parked = service.isParked(vehicle);
@@ -172,10 +171,10 @@ public class ParkingLotTestCases {
     @Test
     public void givenLargeCars_WhenParkItShouldParkInFreeSpace_SoThatEasierToManoeuvre() throws ParkingLotException {
 
-        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.Normal, VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.Normal, VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Large_car, VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Large_car, VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
          service.park(vehicle2);
         int parked = service.isParked(vehicle1);
         int parked1 = service.isParked(vehicle2);
@@ -189,53 +188,53 @@ public class ParkingLotTestCases {
         service.park(vehicle);
         service.isParked(vehicle);
 
-        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
 
-        List whiteCar = service.getCarList();
-       Assert.assertEquals(1,whiteCar.get(0));
-       Assert.assertEquals(21,whiteCar.get(1));
-
+        Map<Integer, Object> carList = service.getCarList(VehicleData.White);
+        System.out.println(carList);
+        Assert.assertTrue(carList.containsKey(1));
+        Assert.assertTrue(carList.containsKey(21));
     }
 
     @Test
-    public void givenCars_WhenParkThenOnlyWhiteCarShouldGetAdd() throws ParkingLotException {
+    public void givenCars_WhenPark_ShouldAddedOnlyWhiteCars() throws ParkingLotException {
         service.park(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.Black,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4546",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.Black,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
         service.park(vehicle2);
 
-        List whiteCar = service.getCarList();
-        Assert.assertEquals(1,whiteCar.get(0));
-        Assert.assertEquals(41,whiteCar.get(1));
-
+        Map<Integer, Object> carList = service.getCarList(VehicleData.White);
+        Assert.assertTrue(carList.containsKey(1));
+        Assert.assertTrue(carList.containsKey(41));
     }
 
 
     @Test
     public void givenCars_WhenPark_ThenItShouldAbleToInvestigateBlueToyotoCars() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4546",VehicleData.Color.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle2);
         service.park(vehicle1);
 
-        Map<Integer, Object> toyotoCars = service.getToyotoCars();
+        Map<Integer, Object> toyotoCars = service.getCarList(VehicleData.Blue,VehicleData.Toyoto);
         Assert.assertTrue(toyotoCars.containsKey(1));
         Assert.assertTrue(toyotoCars.containsKey(21));
     }
 
     @Test
     public void givenCars_WhenPark_ThenItShouldAbleToFindBlueToyotoCarsOnly() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4646",VehicleData.Color.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.carType.Toyoto,"MH 01 CQ 4546",VehicleData.Color.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.White,LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
         service.park(vehicle1);
         service.park(vehicle2);
 
-        Map<Integer, Object> toyotoCars = service.getToyotoCars();
+        Map<Integer, Object> toyotoCars = service.getCarList(VehicleData.Blue,VehicleData.Toyoto);
         Assert.assertFalse(toyotoCars.containsKey(21));
         Assert.assertTrue(toyotoCars.containsKey(1));
     }
+
 
 }
 

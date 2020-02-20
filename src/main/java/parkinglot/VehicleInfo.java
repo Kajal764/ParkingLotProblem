@@ -3,23 +3,25 @@ package parkinglot;
 
 public class VehicleInfo {
 
-
-    public VehicleData.DriverStatus driverStatus;
+    public CHECKFORPARK checkForPark;
     public VehicleData.Color colour;
     public VehicleData.carType carType;
     public String plateNo;
     public String driverName;
-    public VehicleData.CarSize carSize;
     public String time;
 
-    public VehicleInfo(String driverName, VehicleData.DriverStatus driverStatus, VehicleData.carType carType, String plateNo, VehicleData.CarSize carSize, VehicleData.Color color, String time) {
+
+    public VehicleInfo(String driverName, CHECKFORPARK checkforpark, VehicleData.carType carType, String plateNo, VehicleData.Color color, String time) {
         this.driverName=driverName;
-        this.driverStatus=driverStatus;
+        this.checkForPark=checkforpark;
         this.carType=carType;
         this.plateNo=plateNo;
-        this.carSize=carSize;
         this.colour=color;
         this.time=time;
+    }
+
+    public CHECKFORPARK getCheckForPark() {
+        return checkForPark;
     }
 
     public String getTime()
@@ -29,12 +31,11 @@ public class VehicleInfo {
     @Override
     public String toString() {
         return "VehicleInfo{" +
-                "driverStatus=" + driverStatus +
+                "CHECKFORPARK=" + checkForPark +
                 ", colour=" + colour +
                 ", carType=" + carType +
                 ", plateNo='" + plateNo + '\'' +
                 ", driverName='" + driverName + '\'' +
-                ", carSize=" + carSize +
                 ", time='" + time + '\'' +
                 '}';
     }

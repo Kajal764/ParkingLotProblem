@@ -20,7 +20,7 @@ public class ParkingLotService{
 
     List carList =new ArrayList();
 
-    public ParkingLotService(int capacity,int totalSlot) {
+    public ParkingLotService(int capacity, int totalSlot) {
         this.capacity = capacity;
         this.totalSlot=totalSlot;
     }
@@ -50,14 +50,8 @@ public class ParkingLotService{
 
         if (slotMap.size() < capacity) {
             assignSlot();
+            vehicle.getCheckForPark().parkCar(vehicle,slotNo,this);
 
-            if (VehicleData.DriverStatus.IsHandicap == vehicle.driverStatus)
-                parkNonHandicapDriverCar(vehicle);
-            if(VehicleData.CarSize.Large_Car == vehicle.carSize)
-                parkLargeCar(vehicle);
-            if(VehicleData.DriverStatus.Normal == vehicle.driverStatus) {
-                parkIfNull(vehicle);
-            }
         }
             getWhiteCar(vehicle);
             getBlueToyotoCars(vehicle);
@@ -65,23 +59,22 @@ public class ParkingLotService{
             informStatus();
     }
 
-    private void parkIfNull(VehicleInfo vehicle) {
-
-        for(int i=slotNo; i>0; i--) {
+    public void parkIfNull(VehicleInfo vehicle,int slotNo) {
+        this.slotNo=slotNo;
+        for(int i = slotNo; i>0; i--) {
             if(slotMap.containsKey(i) && slotMap.get(i)==null) {
-                slotNo=i;
-                value--;
+                this.slotNo =i;
                 break;
             }
 
         }
-        slotMap.put(slotNo,vehicle);
+        slotMap.put(this.slotNo,vehicle);
 
     }
 
-    private void parkLargeCar(VehicleInfo vehicle) {
-
-        slotNo = slotNo + (capacity / totalSlot) - 2;
+    public void parkLargeCar(VehicleInfo vehicle,int No) {
+        this.slotNo=No;
+        slotNo = this.slotNo + (capacity / totalSlot) - 2;
         while (slotNo >0 )
         {
             if(slotMap.size()%5==0)
@@ -96,13 +89,18 @@ public class ParkingLotService{
         slotMap.putIfAbsent(slotNo,vehicle);
     }
 
-    private void parkNonHandicapDriverCar(VehicleInfo vehicle) {
+    public int parkHandicapDriverCar(VehicleInfo vehicle, int slotNo) {
+        this.slotNo=slotNo;
         if (slotMap.containsKey(handicapSlot)) {
                     Object o = slotMap.get(handicapSlot);
                     slotMap.put(handicapSlot, vehicle);
-                    slotMap.put(slotNo, o);
+                    slotMap.put(this.slotNo, o);
                     handicapSlot = handicapSlot + capacity/totalSlot;
+                    return 0;
         }
+        slotMap.put(this.slotNo,vehicle);
+        System.out.println(slotMap);
+        return this.slotNo;
     }
 
 

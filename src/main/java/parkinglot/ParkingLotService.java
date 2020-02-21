@@ -91,7 +91,6 @@ public class ParkingLotService {
             return 0;
         }
         slotMap.put(this.slotNo, vehicle);
-        System.out.println(slotMap);
         return this.slotNo;
     }
 
@@ -160,6 +159,40 @@ public class ParkingLotService {
         }
     return timeList;
     }
+
+
+    public Map<Integer, VehicleInfo> getHandicapDriverInfo(int i) {
+       Map<Integer,VehicleInfo> vehicle=new HashMap<>();
+
+       for(int k=0;k<= capacity; k++){
+            if(slotMap.get(k)!=null)
+            {
+                if(assignlot(i,k))
+                    vehicle.put(k, (VehicleInfo) slotMap.get(k));
+
+            }
+        }
+        Map<Integer, VehicleInfo> data=vehicle.entrySet().stream()
+                .filter(Entry -> Entry.getValue().checkForPark.equals(CHECKFORPARK.Handicap))
+                .collect(Collectors.toMap(o -> o.getKey(), o -> o.getValue()));
+       return data;
+
+    }
+
+
+    public boolean assignlot(int slot, int key) {
+        int v = 0;
+        int value = capacity / totalSlot;
+        int a[] = new int[totalSlot+1];
+       for(int i=1;i<=totalSlot;i++)
+        {   v=v+value;
+            a[i]=v;
+        }
+        if(key<=a[slot] && key>a[slot-1])
+            return true;
+        return false;
+    }
+
 }
 
 

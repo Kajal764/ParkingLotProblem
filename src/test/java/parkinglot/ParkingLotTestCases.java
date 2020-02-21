@@ -251,6 +251,89 @@ public class ParkingLotTestCases {
         Assert.assertTrue(carWithin30Min.contains(41));
     }
 
+
+    @Test
+    public void givenCarWhenPark_ThenItSlotNoContainsKeyShouldReturnTrue() throws ParkingLotException {
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle1);
+        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle2);
+        boolean assignlot = service.assignlot(3, 45);
+        Assert.assertTrue(assignlot);
+    }
+
+    @Test
+    public void givenCarWhenPark_ThenItShouldReturnSlotWiseVehicleInfo() throws ParkingLotException {
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle1);
+        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle2);
+
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle3);
+
+        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle4);
+
+        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle5);
+
+        VehicleInfo vehicle6=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle6);
+        VehicleInfo vehicle7=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle7);
+        Map<Integer, VehicleInfo> vehicleInfoMap =service.getHandicapDriverInfo(2);
+        Map<Integer, VehicleInfo> handicapDriverInfo = service.getHandicapDriverInfo(4);
+        Assert.assertTrue(vehicleInfoMap.containsKey(21)&& vehicleInfoMap.containsKey(22));
+        Assert.assertTrue(handicapDriverInfo.containsKey(61));
+
+    }
+
+    @Test
+    public void givenCarWhenPark_ThenItShouldReturnSlotWiseHandicapDriverInfo() throws ParkingLotException {
+        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle1);
+
+        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle2);
+
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle3);
+
+        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle4);
+
+        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle5);
+
+        Map<Integer, VehicleInfo> vehicleInfoMap =service.getHandicapDriverInfo(2);
+        Assert.assertTrue(vehicleInfoMap.containsKey(21));
+        Map<Integer, VehicleInfo> vehicle =service.getHandicapDriverInfo(4);
+        Assert.assertTrue(vehicle.containsKey(61));
+    }
+
+    @Test
+    public void givenCarWhenPark_ThenItShouldNotReturnSlotWiseNormalDriverInfo() throws ParkingLotException {
+        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle1);
+
+        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle2);
+
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle3);
+
+        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle4);
+
+        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle5);
+
+        Map<Integer, VehicleInfo> vehicleInfoMap =service.getHandicapDriverInfo(2);
+        Map<Integer, VehicleInfo> vehicle =service.getHandicapDriverInfo(4);
+        Assert.assertTrue(vehicleInfoMap.containsKey(21));
+        Assert.assertFalse(vehicle.containsKey(61));
+    }
 }
 
 

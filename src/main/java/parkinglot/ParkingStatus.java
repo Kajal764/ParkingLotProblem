@@ -1,6 +1,8 @@
 package parkinglot;
 
 
+import enumeration.VehicleData;
+
 public class ParkingStatus {
 
 

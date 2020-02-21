@@ -1,4 +1,4 @@
-package parkinglot;
+package enumeration;
 
 public enum VehicleData {
 

@@ -1,10 +1,13 @@
-package parkinglot;
+package enumeration;
+
+import parkinglot.ParkingLotService;
+import parkinglot.VehicleInfo;
 
 public enum CHECKFORPARK {
 
     Handicap {
         @Override
-        public void parkCar(VehicleInfo vehicle, int slotNo,ParkingLotService service) {
+        public void parkCar(VehicleInfo vehicle, int slotNo, ParkingLotService service) {
             service.parkHandicapDriverCar(vehicle,slotNo);
 
         }

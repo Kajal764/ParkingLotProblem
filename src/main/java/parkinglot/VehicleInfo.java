@@ -1,6 +1,9 @@
 package parkinglot;
 
 
+import enumeration.CHECKFORPARK;
+import enumeration.VehicleData;
+
 import java.time.LocalTime;
 
 public class VehicleInfo {
@@ -22,13 +25,10 @@ public class VehicleInfo {
         this.time=time;
     }
 
+
     public CHECKFORPARK getCheckForPark() {
         return checkForPark;
     }
-
-//    public LocalTime getTime()
-//    { return time; }
-
 
     @Override
     public String toString() {

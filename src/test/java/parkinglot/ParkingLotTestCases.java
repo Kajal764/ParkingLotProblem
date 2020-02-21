@@ -1,5 +1,8 @@
 package parkinglot;
 
+import enumeration.CHECKFORPARK;
+import enumeration.VehicleData;
+import exception.ParkingLotException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +18,7 @@ public class ParkingLotTestCases {
 
     @Before
     public void setUp() {
-        vehicle=new VehicleInfo("Sonam",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        vehicle=new VehicleInfo("Sonam", CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
         service = new ParkingLotService(100,5);
     }
 
@@ -48,15 +51,17 @@ public class ParkingLotTestCases {
 
 
     @Test
-    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThanLotCapacity() {
-        try {
-            for (int i = 1; i <= 101; i++) {
-                service.park(vehicle);
-                service.isParked(vehicle);
-            }
-        } catch (ParkingLotException e) {
-            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.Lot_Not_Available);
-        }
+    public void whenParkTheCar_ItShouldCheckItsParkingCarShouldNotBeMoreThanLotCapacity() throws ParkingLotException {
+       try {
+           for (int i = 1; i <= 101; i++) {
+               service.park(vehicle);
+               service.isParked(vehicle);
+           }
+       }catch (ParkingLotException e)
+       {
+           Assert.assertEquals(e.type, ParkingLotException.ExceptionType.Lot_Not_Available);
+       }
+
     }
 
     @Test

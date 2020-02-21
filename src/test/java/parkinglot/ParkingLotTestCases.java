@@ -334,6 +334,17 @@ public class ParkingLotTestCases {
         Assert.assertTrue(vehicleInfoMap.containsKey(21));
         Assert.assertFalse(vehicle.containsKey(61));
     }
+
+    @Test
+    public void givenCarWhenParkThenItShouldReturnItsCorrectRecors() throws ParkingLotException {
+        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle1);
+        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        service.park(vehicle2);
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        int park = service.park(vehicle3);
+        Assert.assertEquals(3,park);
+    }
 }
 
 

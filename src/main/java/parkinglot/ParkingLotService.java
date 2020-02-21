@@ -40,7 +40,7 @@ public class ParkingLotService {
         return slotNo;
     }
 
-    public void park(VehicleInfo vehicle) throws ParkingLotException {
+    public int park(VehicleInfo vehicle) throws ParkingLotException {
 
         if (slotMap.size() == capacity)
             throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
@@ -50,7 +50,9 @@ public class ParkingLotService {
             vehicle.getCheckForPark().parkCar(vehicle, slotNo, this);
 
         }
+
         informStatus();
+        return slotMap.size();
     }
 
     public void parkIfNull(VehicleInfo vehicle, int slotNo) {

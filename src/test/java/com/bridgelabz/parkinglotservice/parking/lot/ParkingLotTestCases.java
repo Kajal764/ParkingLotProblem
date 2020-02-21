@@ -1,9 +1,12 @@
-package com.bridgelabz.parkinglotservice.service;
+package com.bridgelabz.parkinglotservice.parking.lot;
 
 import com.bridgelabz.parkinglotservice.ParkingLotService;
 import com.bridgelabz.parkinglotservice.enumeration.CHECKFORPARK;
 import com.bridgelabz.parkinglotservice.enumeration.VehicleData;
 import com.bridgelabz.parkinglotservice.exception.ParkingLotException;
+import com.bridgelabz.parkinglotservice.service.AirportSecurityInfo;
+import com.bridgelabz.parkinglotservice.service.OwnerInfo;
+import com.bridgelabz.parkinglotservice.service.VehicleInfo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +79,6 @@ public class ParkingLotTestCases {
         Assert.assertFalse(slotAvailable);
 
     }
-
 
     @Test
     public void givenCarwhenPark_ThenItShouldFirstCheckEmptySpace() throws ParkingLotException {

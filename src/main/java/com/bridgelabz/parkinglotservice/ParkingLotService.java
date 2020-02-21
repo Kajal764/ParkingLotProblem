@@ -24,7 +24,7 @@ public class ParkingLotService {
     public int handicapSlot = 1;
     int slotNo;
 
-    Map<Integer, Object> slotMap = new HashMap<>();
+    Map<Integer, VehicleInfo> slotMap = new HashMap<>();
     List<Integer> timeList = new ArrayList<>();
     ParkingStatus parkingStatus = new ParkingStatus();
 
@@ -92,7 +92,7 @@ public class ParkingLotService {
     public int parkHandicapDriverCar(VehicleInfo vehicle, int slotNo) {
         this.slotNo = slotNo;
         if (slotMap.containsKey(handicapSlot)) {
-            Object o = slotMap.get(handicapSlot);
+            VehicleInfo o = slotMap.get(handicapSlot);
             slotMap.put(handicapSlot, vehicle);
             slotMap.put(this.slotNo, o);
             handicapSlot = handicapSlot + CAPACITY / TOTAL_SLOT;
@@ -104,7 +104,7 @@ public class ParkingLotService {
 
 
     public int isParked(Object vehicle) {
-        for (Map.Entry<Integer, Object> i : slotMap.entrySet()) {
+        for (Map.Entry<Integer, VehicleInfo> i : slotMap.entrySet()) {
             if (i.getValue() == vehicle)
                 return i.getKey();
         }
@@ -113,7 +113,7 @@ public class ParkingLotService {
     }
 
     public void unPark(Object vehicle) {
-        for (Map.Entry<Integer, Object> i : slotMap.entrySet()) {
+        for (Map.Entry<Integer, VehicleInfo> i : slotMap.entrySet()) {
             if (i.getValue() == vehicle)
                 slotMap.put(i.getKey(), null);
         }
@@ -171,20 +171,15 @@ public class ParkingLotService {
 
 
     public Map<Integer, VehicleInfo> getHandicapDriverInfo(int i) {
-       Map<Integer,VehicleInfo> vehicle=new HashMap<>();
 
-       for(int k = 0; k<= CAPACITY; k++){
-            if(slotMap.get(k)!=null)
-            {
-                if(assignlot(i,k))
-                    vehicle.put(k, (VehicleInfo) slotMap.get(k));
+        Map<Integer,VehicleInfo> vehicle = slotMap.entrySet().stream()
+                .filter(entry -> assignlot(i, entry.getKey()))
+                .collect(Collectors.toMap(m -> m.getKey(), m -> m.getValue()));
 
-            }
-        }
-        Map<Integer, VehicleInfo> data=vehicle.entrySet().stream()
+        vehicle=vehicle.entrySet().stream()
                 .filter(Entry -> Entry.getValue().checkForPark.equals(CHECKFORPARK.HANDICAP))
                 .collect(Collectors.toMap(o -> o.getKey(), o -> o.getValue()));
-       return data;
+      return vehicle;
 
     }
 

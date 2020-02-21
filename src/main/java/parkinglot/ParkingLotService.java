@@ -13,8 +13,9 @@ import java.util.stream.Collectors;
 
 public class ParkingLotService {
 
-    public int capacity;
-    public int totalSlot;
+    public int CAPACITY;
+    public int TOTAL_SLOT;
+
     public int count = 0;
     public int i = 1;
     public int value = 0;
@@ -26,20 +27,20 @@ public class ParkingLotService {
     ParkingStatus parkingStatus = new ParkingStatus();
 
 
-    public ParkingLotService(int capacity, int totalSlot) {
-        this.capacity = capacity;
-        this.totalSlot = totalSlot;
+    public ParkingLotService(int capacity, int TOTAL_SLOT) {
+        this.CAPACITY = capacity;
+        this.TOTAL_SLOT = TOTAL_SLOT;
     }
 
     public int assignSlot() {
-        int slotSize = capacity / totalSlot;
+        int slotSize = CAPACITY / TOTAL_SLOT;
         count++;
         if (count > 5) {
             value = 0;
             i++;
             count = 1;
         }
-        while (count <= totalSlot) {
+        while (count <= TOTAL_SLOT) {
             slotNo = i + slotSize * value;
             value++;
             break;
@@ -49,10 +50,10 @@ public class ParkingLotService {
 
     public int park(VehicleInfo vehicle) throws ParkingLotException {
 
-        if (slotMap.size() == capacity)
+        if (slotMap.size() == CAPACITY)
             throw new ParkingLotException("Lot_Not_Available", ParkingLotException.ExceptionType.Lot_Not_Available);
 
-        if (slotMap.size() < capacity) {
+        if (slotMap.size() < CAPACITY) {
             assignSlot();
             vehicle.getCheckForPark().parkCar(vehicle, slotNo,this);
         }
@@ -76,7 +77,7 @@ public class ParkingLotService {
 
     public void parkLargeCar(VehicleInfo vehicle, int No) {
         this.slotNo = No;
-        slotNo = this.slotNo + (capacity / totalSlot) - 2;
+        slotNo = this.slotNo + (CAPACITY / TOTAL_SLOT) - 2;
         while (slotNo > 0) {
             if (slotMap.size() % 5 == 0) {
                 slotNo = slotNo - 1;
@@ -95,7 +96,7 @@ public class ParkingLotService {
             Object o = slotMap.get(handicapSlot);
             slotMap.put(handicapSlot, vehicle);
             slotMap.put(this.slotNo, o);
-            handicapSlot = handicapSlot + capacity / totalSlot;
+            handicapSlot = handicapSlot + CAPACITY / TOTAL_SLOT;
             return 0;
         }
         slotMap.put(this.slotNo, vehicle);
@@ -104,7 +105,7 @@ public class ParkingLotService {
 
 
     public int isParked(Object vehicle) {
-        for (int i = 1; i <= capacity; i++) {
+        for (int i = 1; i <= CAPACITY; i++) {
             if (slotMap.get(i) == vehicle)
                 return i;
         }
@@ -112,7 +113,7 @@ public class ParkingLotService {
     }
 
     public void unPark(Object vehicle) {
-        for (int i = 1; i <= capacity; i++) {
+        for (int i = 1; i <= CAPACITY; i++) {
             if (slotMap.get(i) == vehicle)
                 slotMap.put(i, null);
         }
@@ -127,10 +128,10 @@ public class ParkingLotService {
     }
 
     private void informStatus() {
-        if (slotMap.size() < capacity || slotMap.containsValue(null))
-            parkingStatus.getLotStatus(VehicleData.Lot_Available);
+        if (slotMap.size() < CAPACITY || slotMap.containsValue(null))
+            parkingStatus.getLotStatus(VehicleData.LOT_AVAILABLE);
         else
-            parkingStatus.getLotStatus(VehicleData.Lot_Full);
+            parkingStatus.getLotStatus(VehicleData.LOT_FULL);
     }
 
     public Map<Integer, Object> getCarList(VehicleData... findValue) {
@@ -153,7 +154,7 @@ public class ParkingLotService {
 
 
     public List<Integer> getCarWithin30Min() {
-        for( int i=1;i<=capacity ;i++ )
+        for(int i = 1; i<= CAPACITY; i++ )
         {
             if(slotMap.get(i)!=null)
             {
@@ -172,7 +173,7 @@ public class ParkingLotService {
     public Map<Integer, VehicleInfo> getHandicapDriverInfo(int i) {
        Map<Integer,VehicleInfo> vehicle=new HashMap<>();
 
-       for(int k=0;k<= capacity; k++){
+       for(int k = 0; k<= CAPACITY; k++){
             if(slotMap.get(k)!=null)
             {
                 if(assignlot(i,k))
@@ -181,7 +182,7 @@ public class ParkingLotService {
             }
         }
         Map<Integer, VehicleInfo> data=vehicle.entrySet().stream()
-                .filter(Entry -> Entry.getValue().checkForPark.equals(CHECKFORPARK.Handicap))
+                .filter(Entry -> Entry.getValue().checkForPark.equals(CHECKFORPARK.HANDICAP))
                 .collect(Collectors.toMap(o -> o.getKey(), o -> o.getValue()));
        return data;
 
@@ -190,9 +191,9 @@ public class ParkingLotService {
 
     public boolean assignlot(int slot, int key) {
         int v = 0;
-        int value = capacity / totalSlot;
-        int a[] = new int[totalSlot+1];
-       for(int i=1;i<=totalSlot;i++)
+        int value = CAPACITY / TOTAL_SLOT;
+        int a[] = new int[TOTAL_SLOT +1];
+       for(int i = 1; i<= TOTAL_SLOT; i++)
         {   v=v+value;
             a[i]=v;
         }

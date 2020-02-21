@@ -5,20 +5,20 @@ import parkinglot.VehicleInfo;
 
 public enum CHECKFORPARK {
 
-    Handicap {
+    HANDICAP {
         @Override
         public void parkCar(VehicleInfo vehicle, int slotNo, ParkingLotService service) {
             service.parkHandicapDriverCar(vehicle,slotNo);
 
         }
     },
-    Large_car {
+    LARGE_CAR {
         @Override
         public void parkCar(VehicleInfo vehicle, int slotNo,ParkingLotService service) {
             service.parkLargeCar(vehicle,slotNo);
         }
     },
-    Normal {
+    NORMAL {
         @Override
         public void parkCar(VehicleInfo vehicle, int slotNo,ParkingLotService service) {
            service.parkIfNull(vehicle,slotNo);

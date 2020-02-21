@@ -12,7 +12,7 @@ public class ParkingStatus {
 
     public void getLotStatus(VehicleData status) {
         lotStatus = status;
-        if(lotStatus.equals(VehicleData.Lot_Available))
+        if(lotStatus.equals(VehicleData.LOT_AVAILABLE))
         {
             airportSecurityInfo.isLotAvailable(true);
             ownerInfo.LotAvailable(true);

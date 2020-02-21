@@ -18,7 +18,7 @@ public class ParkingLotTestCases {
 
     @Before
     public void setUp() {
-        vehicle=new VehicleInfo("Sonam", CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        vehicle=new VehicleInfo("Sonam", CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service = new ParkingLotService(100,5);
     }
 
@@ -42,7 +42,7 @@ public class ParkingLotTestCases {
 
         int parked = 0;
         for (int i = 1; i <= 100; i++) {
-            VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+            VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
             service.park(vehicle1);
              parked = service.isParked(vehicle1);
         }
@@ -68,7 +68,7 @@ public class ParkingLotTestCases {
     public void whenLotFull_ItShouldInformAirportSecurityService() throws ParkingLotException {
         AirportSecurityInfo airportSecurity=new AirportSecurityInfo();
         for (int i = 1; i <= 100; i++) {
-            VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+            VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
             service.park(vehicle2);
             service.isParked(vehicle2);
         }
@@ -82,12 +82,12 @@ public class ParkingLotTestCases {
     public void givenCarwhenPark_ThenItShouldFirstCheckEmptySpace() throws ParkingLotException {
         service.park(vehicle);
         int parked = service.isParked(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         service.unPark(vehicle1);
         service.isParked(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle2);
         int parked3 = service.isParked(vehicle2);
 
@@ -98,7 +98,7 @@ public class ParkingLotTestCases {
     @Test
     public void whenLotAvailable_ItShouldReturnAvaliableSlotStatus() throws ParkingLotException {
         service.park(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Smita",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Smita",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         AirportSecurityInfo airportSecurity=new AirportSecurityInfo();
         boolean capacityFull = airportSecurity.checkStatus();
@@ -107,7 +107,7 @@ public class ParkingLotTestCases {
 
     @Test
     public void whenLotCapacityFull_AndUnparkTheCarThenItShouldReturnStatusEmptyAgain() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
        service.park(vehicle);
         for (int i = 1; i <= 99; i++) {
             service.park(vehicle1);
@@ -138,11 +138,11 @@ public class ParkingLotTestCases {
         service.park(vehicle);
         int parked = service.isParked(vehicle);
 
-        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         int parked1 = service.isParked(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("Kajal",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Kajal",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle2);
         int parked2 = service.isParked(vehicle2);
 
@@ -154,7 +154,7 @@ public class ParkingLotTestCases {
     @Test
     public void whenHandicapDriverWantToParkHisCar_ThatSlotShouldBeNearest() throws ParkingLotException {
         service.park(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.Handicap,  VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.HANDICAP,  VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         int parked = service.isParked(vehicle);
         int parked1 = service.isParked(vehicle1);
@@ -165,10 +165,10 @@ public class ParkingLotTestCases {
     @Test
     public void givenLargeCars_WhenParkItShouldParkInFreeSpace_SoThatEasierToManoeuvre() throws ParkingLotException {
 
-        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.Normal, VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Nisha", CHECKFORPARK.NORMAL, VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.Large_car, VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Nisha",CHECKFORPARK.LARGE_CAR, VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
          service.park(vehicle2);
         int parked = service.isParked(vehicle1);
         int parked1 = service.isParked(vehicle2);
@@ -182,10 +182,10 @@ public class ParkingLotTestCases {
         service.park(vehicle);
         service.isParked(vehicle);
 
-        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Nisha",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
 
-        Map<Integer, Object> carList = service.getCarList(VehicleData.White);
+        Map<Integer, Object> carList = service.getCarList(VehicleData.WHITE);
         Assert.assertTrue(carList.containsKey(1));
         Assert.assertTrue(carList.containsKey(21));
     }
@@ -193,12 +193,12 @@ public class ParkingLotTestCases {
     @Test
     public void givenCars_WhenPark_ShouldAddedOnlyWhiteCars() throws ParkingLotException {
         service.park(vehicle);
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.Black,LocalTime.now());
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.BLACK,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4546",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         service.park(vehicle2);
 
-        Map<Integer, Object> carList = service.getCarList(VehicleData.White);
+        Map<Integer, Object> carList = service.getCarList(VehicleData.WHITE);
         Assert.assertTrue(carList.containsKey(1));
         Assert.assertTrue(carList.containsKey(41));
     }
@@ -206,32 +206,32 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCars_WhenPark_ThenItShouldAbleToInvestigateBlueToyotoCars() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4546",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
         service.park(vehicle1);
 
-        Map<Integer, Object> toyotoCars = service.getCarList(VehicleData.Blue,VehicleData.Toyoto);
+        Map<Integer, Object> toyotoCars = service.getCarList(VehicleData.BLUE,VehicleData.TOYOTO);
         Assert.assertTrue(toyotoCars.containsKey(1));
         Assert.assertTrue(toyotoCars.containsKey(21));
     }
 
     @Test
     public void givenCars_WhenPark_ThenItShouldAbleToFindBlueToyotoCarsOnly() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4546",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         service.park(vehicle2);
 
-        Map<Integer, Object> toyotoCars = service.getCarList(VehicleData.Blue,VehicleData.Toyoto);
+        Map<Integer, Object> toyotoCars = service.getCarList(VehicleData.BLUE,VehicleData.TOYOTO);
         Assert.assertFalse(toyotoCars.containsKey(21));
         Assert.assertTrue(toyotoCars.containsKey(1));
     }
 
     @Test
     public void givenCars_WhenPark_ItShouldAbleToFindBMWCars() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
-        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.Normal,VehicleData.Toyoto,"MH 01 CQ 4546",VehicleData.White,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Prashant",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Amar",CHECKFORPARK.NORMAL,VehicleData.TOYOTO,"MH 01 CQ 4546",VehicleData.WHITE,LocalTime.now());
         service.park(vehicle1);
         service.park(vehicle2);
 
@@ -243,11 +243,11 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCarWhenPark_ItShouldReturnCarThatHasBeenParkedInTheLast30Minutes() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle1);
-        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
-        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle3);
         vehicle1.time= LocalTime.now().minusMinutes(30);
         vehicle3.time=LocalTime.now().minusMinutes(40);
@@ -259,9 +259,9 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCarWhenPark_ThenItSlotNoContainsKeyShouldReturnTrue() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle1);
-        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
         boolean assignlot = service.assignlot(3, 45);
         Assert.assertTrue(assignlot);
@@ -269,23 +269,23 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCarWhenPark_ThenItShouldReturnSlotWiseVehicleInfo() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle1);
-        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("Pranali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
 
-        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle3);
 
-        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle4);
 
-        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle5);
 
-        VehicleInfo vehicle6=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle6=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle6);
-        VehicleInfo vehicle7=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle7=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle7);
         Map<Integer, VehicleInfo> vehicleInfoMap =service.getHandicapDriverInfo(2);
         Map<Integer, VehicleInfo> handicapDriverInfo = service.getHandicapDriverInfo(4);
@@ -296,19 +296,19 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCarWhenPark_ThenItShouldReturnSlotWiseHandicapDriverInfo() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
 
-        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle3);
 
-        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle4);
 
-        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle5);
 
         Map<Integer, VehicleInfo> vehicleInfoMap =service.getHandicapDriverInfo(2);
@@ -319,19 +319,19 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCarWhenPark_ThenItShouldNotReturnSlotWiseNormalDriverInfo() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle1);
 
-        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
 
-        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle3);
 
-        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle4=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle4);
 
-        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle5=new VehicleInfo("Pranali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle5);
 
         Map<Integer, VehicleInfo> vehicleInfoMap =service.getHandicapDriverInfo(2);
@@ -342,11 +342,11 @@ public class ParkingLotTestCases {
 
     @Test
     public void givenCarWhenParkThenItShouldReturnItsCorrectRecors() throws ParkingLotException {
-        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.Normal,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle1=new VehicleInfo("runali",CHECKFORPARK.NORMAL,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle1);
-        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle2=new VehicleInfo("ali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         service.park(vehicle2);
-        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.Handicap,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.Blue,LocalTime.now());
+        VehicleInfo vehicle3=new VehicleInfo("Pranali",CHECKFORPARK.HANDICAP,VehicleData.BMW,"MH 01 CQ 4646",VehicleData.BLUE,LocalTime.now());
         int park = service.park(vehicle3);
         Assert.assertEquals(3,park);
     }

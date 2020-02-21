@@ -3,12 +3,12 @@ package enumeration;
 public enum VehicleData {
 
 
-    Lot_Full,
-    Lot_Available,
-    White,
-    Blue,
-    Black,
-    Toyoto,
+    LOT_FULL,
+    LOT_AVAILABLE,
+    WHITE,
+    BLUE,
+    BLACK,
+    TOYOTO,
     BMW
 
 
